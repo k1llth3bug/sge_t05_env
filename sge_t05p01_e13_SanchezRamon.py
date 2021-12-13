@@ -1,4 +1,4 @@
-def imprimir_triangulo(longitud: int):
+def imprimir_triangulo(longitud: int) -> str:
     if not (longitud % 2 == 0):
         res = ""
         for i in range(1, longitud+2, 2):
