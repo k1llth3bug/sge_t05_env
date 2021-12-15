@@ -18,4 +18,3 @@ def contar_letras_y_palabras(cadena: str) -> tuple:
     return dicc_pal, dicc_let
 
 print(contar_letras_y_palabras("Hola!, que tal. ¿Como esta usted?"))
-print(contar_letras_y_palabras.__doc__)
