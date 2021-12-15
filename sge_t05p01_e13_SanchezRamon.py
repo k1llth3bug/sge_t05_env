@@ -1,8 +1,5 @@
 def imprimir_triangulo(longitud: int) -> str:
-    """Devuelve un triángulo de numeros impares ordenados descendentemente y líneas crecientes
-    
-    Argumentos:
-    longitud -- Longitud del triángulo"""
+    """Devuelve un triángulo de numeros impares ordenados descendentemente y líneas crecientes"""
     if not (longitud % 2 == 0):
         res = ""
         for i in range(1, longitud+2, 2):
