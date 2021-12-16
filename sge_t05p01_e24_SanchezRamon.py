@@ -1,6 +1,6 @@
 import re
 
-REGEX_MAIL = re.compile(r"""^[a-z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*$""", re.IGNORECASE)
+REGEX_MAIL = re.compile(r"""^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$""", re.IGNORECASE)
 
 def es_nif_valido(nif: str)-> bool:
     """"Devuelve si un NIF es válido"""
