@@ -56,14 +56,20 @@ def mostrar_cliente(clientes: dict, nif_cliente: str):
 
 def mostrar_clientes(clientes: dict):
     """Muestra todos los clientes"""
-    for nif, cliente in clientes.items():
-        print(f"""NIF: {nif}, nombre completo: {cliente["nombre"]} {cliente["apellidos"]}""")
+    if len(clientes) == 0:
+         print("No hay clientes que mostrar")
+    else: 
+        for nif in clientes.keys():
+            mostrar_cliente(clientes, nif)
 
 def mostrar_preferentes(clientes: dict):
     """Muestra los clientes preferentes"""
-    for nif, cliente in clientes.items():
-        if cliente["preferente"]:
-            print(f"""NIF: {nif}, nombre completo: {cliente["nombre"]} {cliente["apellidos"]}""")
+    if len(clientes) == 0:
+        print("No hay clientes que mostrar")
+    else:
+        for nif, cliente in clientes.items():
+            if cliente["preferente"]:
+                mostrar_cliente(clientes, nif)
 
 def ordenar_por_apellidos(clientes: dict):
     """Ordena los clientes por apellidos y los muestra"""
