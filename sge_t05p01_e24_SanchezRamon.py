@@ -84,7 +84,7 @@ def pedir_nif() -> str:
     """Pide al usuario un nif válido"""
     res = input("Dime un NIF: ")
     while not es_nif_valido(res):
-        print("f{nif} no es in nif válido, prueba de nuevo")
+        print("f{nif} no es un nif válido, prueba de nuevo")
         res = input()
     return res
 
