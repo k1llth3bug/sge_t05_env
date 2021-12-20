@@ -3,7 +3,7 @@ import re
 REGEX_MAIL = re.compile(r"""^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$""", re.IGNORECASE)
 
 def es_nif_valido(nif: str)-> bool:
-    """"Devuelve si un NIF es válido"""
+    """Devuelve si un NIF es válido"""
     if len(nif) == 9:
         nif = nif.upper()
         letras = "TRWAGMYFPDXBNJZSQVHLCKE"
