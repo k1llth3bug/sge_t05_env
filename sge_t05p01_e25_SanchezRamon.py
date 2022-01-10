@@ -91,7 +91,7 @@ def pedir_decimal(input_str: str)-> float:
     return float(res_str)
 
 def pedir_puntos_distintos() -> tuple:
-    """Devielve 2 puntos distintos pedidos al usuario"""
+    """Devuelve 2 puntos distintos pedidos al usuario"""
     x1 = pedir_decimal("Dime la coordenada x del primer punto: ")
     y1 = pedir_decimal("Dime la coordenada y del primer punto: ")
     x2 = pedir_decimal("Dime la coordenada x del segundo punto: ")
@@ -133,19 +133,23 @@ def opciones_puntos(p1: Punto, p2: Punto):
 
 
 def opciones_rectangulo(r1: Rectangulo):
-    op = input("Dime una opción: ")
-    while not op=="d":
-        match op:
-            case "a":
-                print(f"Base: {r1.get_base()}")
-            case "b":
-                print(f"Altura: {r1.get_altura()}")
-            case "c":
-                print(f"Área: {r1.get_area()}")
-            case "d":
-                print("Saliendo del submenú")
-            case _:
-                print("No es una opción válida")
+    """Pide, si es un rectángulo, una opción del submenú de rectángulo, y muestra el resultado correspondiente"""
+    if r1.es_rectangulo():
+        op = input("Dime una opción: ")
+        while not op=="d":
+            match op:
+                case "a":
+                    print(f"Base: {r1.get_base()}")
+                case "b":
+                    print(f"Altura: {r1.get_altura()}")
+                case "c":
+                    print(f"Área: {r1.get_area()}")
+                case "d":
+                    print("Saliendo del submenú")
+                case _:
+                    print("No es una opción válida")
+    else:
+        print("No es un rectángulo")
 
 p1, p2 = pedir_puntos_distintos()
 opcion = 0
