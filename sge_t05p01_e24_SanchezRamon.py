@@ -9,7 +9,7 @@ def es_nif_valido(nif: str)-> bool:
         letras = "TRWAGMYFPDXBNJZSQVHLCKE"
         return nif[:-1].isnumeric() and letras[int(nif[:-1])%23] == nif[8]
     else:
-        return 
+        return False
 
 def es_telefono_valido(tlfn: str) -> bool:
     """Devuelve si una cadena es un múmero de teléfono válido"""
