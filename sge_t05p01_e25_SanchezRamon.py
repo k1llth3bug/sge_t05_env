@@ -65,7 +65,7 @@ class Rectangulo:
         """Devuelve el área del rectángulo"""
         return self.get_base() * self.get_altura()
 
-def es_entero(cadena: str, signo_permitido: bool) -> bool:
+def es_entero(cadena: str, signo_permitido: bool = False) -> bool:
     """Devuelve si un número es entero pudiendo tener un signo al principio"""
     return cadena[1:].isnumeric if signo_permitido and cadena.startswith(("+","-")) else cadena.isnumeric()
 
@@ -78,7 +78,7 @@ def es_decimal(cadena: str) -> bool:
                 return es_entero(partes[0], True)
             case 2:
                 entera, decimal = partes[0], partes[1]
-                return es_entero(entera, True) and es_entero(decimal, False)
+                return es_entero(entera, True) and es_entero(decimal)
     else:
         return False
 
@@ -89,6 +89,15 @@ def pedir_decimal(input_str: str)-> float:
         print("No es un número, prueba de nuevo")
         res_str = input()
     return float(res_str)
+
+
+def pedir_entero(input_str: str)-> int:
+    """Pide al usuario un número entero"""
+    res_str = input(input_str)
+    while not es_entero(res_str):
+        print("No es un número, prueba de nuevo")
+        res_str = input()
+    return int(res_str)
 
 def pedir_puntos_distintos() -> tuple:
     """Devuelve 2 puntos distintos pedidos al usuario"""
@@ -130,6 +139,7 @@ def opciones_puntos(p1: Punto, p2: Punto):
                 print("Saliendo del submenú")
             case _:
                 print("No es una opción válida")
+        op = input("Dime otra opción: ")
 
 
 def opciones_rectangulo(r1: Rectangulo):
@@ -148,6 +158,7 @@ def opciones_rectangulo(r1: Rectangulo):
                     print("Saliendo del submenú")
                 case _:
                     print("No es una opción válida")
+            op = input("Dime otra opción:")
     else:
         print("No es un rectángulo")
 
@@ -155,17 +166,16 @@ p1, p2 = pedir_puntos_distintos()
 opcion = 0
 while not opcion==3:
     mostrar_menu()
-    opcion_str = input("Dime una opción: ")
-    while not es_entero(opcion_str):
-        print("No es un número, prueba de nuevo")
-        input()
-    opcion = int(opcion)
-    match opcion:
-        case 1:
-            opciones_puntos(p1, p2)
-        case 2:
-            opciones_rectangulo(Rectangulo(p1, p2))
-        case 3:
-            print("Saliendo...")
-        case _:
-            print("No es una opción válida")
+    opcion = pedir_entero("Dime una opción: ")
+    while not opcion == 3:
+        match opcion:
+            case 1:
+                opciones_puntos(p1, p2)
+            case 2:
+                opciones_rectangulo(Rectangulo(p1, p2))
+            case 3:
+                print("Saliendo...")
+            case _:
+                print("No es una opción válida")
+        mostrar_menu()
+        opcion = pedir_entero("Dime otra opción: ")
