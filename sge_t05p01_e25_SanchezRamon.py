@@ -126,7 +126,7 @@ def mostrar_menu():
 
 def opciones_puntos(p1: Punto, p2: Punto):
     """Pide una opción del submenú de puntos, y muestra el resultado correspondiente"""
-    op = input("Dime una opción: ")
+    op = input("Dime una opción (puntos): ")
     while not op=="d":
         match op:
             case "a":
@@ -145,7 +145,7 @@ def opciones_puntos(p1: Punto, p2: Punto):
 def opciones_rectangulo(r1: Rectangulo):
     """Pide, si es un rectángulo, una opción del submenú de rectángulo, y muestra el resultado correspondiente"""
     if r1.es_rectangulo():
-        op = input("Dime una opción: ")
+        op = input("Dime una opción (rectángulo): ")
         while not op=="d":
             match op:
                 case "a":
