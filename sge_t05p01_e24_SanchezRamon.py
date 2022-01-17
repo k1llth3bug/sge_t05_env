@@ -7,7 +7,7 @@ def es_nif_valido(nif: str)-> bool:
     if len(nif) == 9:
         nif = nif.upper()
         letras = "TRWAGMYFPDXBNJZSQVHLCKE"
-        return nif[:-1].isnumeric() and letras[int(nif[:-1])%23] == nif[8]
+        return nif[:-1].isnumeric() and 1000000 <= int(nif[:-1]) < 100000000 and letras[int(nif[:-1])%23] == nif[8]
     else:
         return False
 
