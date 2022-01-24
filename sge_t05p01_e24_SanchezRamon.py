@@ -76,10 +76,21 @@ def ordenar_por_apellidos(clientes: dict):
     clientes = dict(sorted(clientes.items(), key=lambda item : item[1]["apellidos"].lower()))
     mostrar_clientes(clientes)
 
-def validar_numero(cadena: str) -> bool:
-    """Valida si una cadena es numérica"""
-    return cadena[1:].isnumeric() if cadena.startswith(("+","-")) else cadena.isnumeric()
 
+def pedir_entero(input_str: str)-> int:
+    """Pide al usuario un número entero"""
+    res_str = input(input_str)
+    res = 0
+    es_entero = False
+    while not es_entero:
+        try:
+            res = int(res_str)
+            es_entero = True
+        except ValueError:
+            print("No es un número, prueba de nuevo")
+            res_str = input()
+    return res
+    
 def pedir_nif() -> str:
     """Pide al usuario un nif válido"""
     res = input("Dime un NIF: ")
@@ -92,11 +103,7 @@ clientes = {}
 num = 0
 while not num==7:
     print("\n".join(["1. Añadir cliente","2. Eliminar cliente","3. Mostrar cliente","4. Listar clientes","5. Listar clientes preferentes","6. Ordenar alfabéticamente por apellidos","7. Terminar"]))
-    num_str = input("Dime un número: ")
-    while not validar_numero(num_str):
-        print("No es válido, prueba de nuevo")
-        num_str = input()
-    num = int(num_str)
+    num = pedir_entero("Dime un número: ")
     match num:
         case 1:
             add_cliente(clientes)
