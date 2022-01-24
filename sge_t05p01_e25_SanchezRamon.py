@@ -35,14 +35,10 @@ class Punto:
     
     def vector(self, other):
         """Devuelve el vector formado por este punto y otro dado"""
-        if not isinstance(other, Punto):
-            raise ValueError(f"{other} tiene que ser una instancia de Punto")
         return other.get_x() - self.__x, other.get_y() - self.__y
 
     def distancia(self, other):
         """Calcula la distancia entre este punto y otro dado"""
-        if not isinstance(other, Punto):
-            raise ValueError(f"{other} tiene que ser una instancia de Punto")
         return hypot(self.__x - other.get_x(), self.__y - other.get_y())
 
 class Rectangulo:
@@ -65,39 +61,33 @@ class Rectangulo:
         """Devuelve el área del rectángulo"""
         return self.get_base() * self.get_altura()
 
-def es_entero(cadena: str, signo_permitido: bool = False) -> bool:
-    """Devuelve si un número es entero pudiendo tener un signo al principio"""
-    return cadena[1:].isnumeric if signo_permitido and cadena.startswith(("+","-")) else cadena.isnumeric()
-
-def es_decimal(cadena: str) -> bool:
-    """Devuelve si la cadena es un decimal"""
-    partes = cadena.split(".")
-    if len(partes) in [1,2]:
-        match len(partes):
-            case 1:
-                return es_entero(partes[0], True)
-            case 2:
-                entera, decimal = partes[0], partes[1]
-                return es_entero(entera, True) and es_entero(decimal)
-    else:
-        return False
-
 def pedir_decimal(input_str: str)-> float:
     """Pide al usuario un número decimal, validando el formato"""
     res_str = input(input_str)
-    while not es_decimal(res_str):
-        print("No es un número, prueba de nuevo")
-        res_str = input()
-    return float(res_str)
-
+    res = 0
+    es_decimal = False
+    while not es_decimal:
+        try:
+            res = float(res_str)
+            es_decimal = True
+        except ValueError:
+            print("No es un número, prueba de nuevo")
+            res_str = input()
+    return res
 
 def pedir_entero(input_str: str)-> int:
     """Pide al usuario un número entero"""
     res_str = input(input_str)
-    while not es_entero(res_str):
-        print("No es un número, prueba de nuevo")
-        res_str = input()
-    return int(res_str)
+    res = 0
+    es_entero = False
+    while not es_entero:
+        try:
+            res = int(res_str)
+            es_entero = True
+        except ValueError:
+            print("No es un número, prueba de nuevo")
+            res_str = input()
+    return res
 
 def pedir_puntos_distintos() -> tuple:
     """Devuelve 2 puntos distintos pedidos al usuario"""
@@ -105,7 +95,7 @@ def pedir_puntos_distintos() -> tuple:
     y1 = pedir_decimal("Dime la coordenada y del primer punto: ")
     x2 = pedir_decimal("Dime la coordenada x del segundo punto: ")
     y2 = pedir_decimal("Dime la coordenada y del segundo punto: ")
-    if x1 == x2 and y1 == y2:
+    while x1 == x2 and y1 == y2:
         print("No pueden ser iguales, introduce las coordenadas del segundo punto de nuevo")
         x2 = pedir_decimal("Dime la primera: ")
         y2 = pedir_decimal("Dime la segunda: ")
@@ -116,11 +106,13 @@ def mostrar_menu():
     op1 = """1. Operaciones con puntos:
     a) Mostrar cuadrantes
     b) Calcular vector
-    c) Calcular distancia"""
+    c) Calcular distancia
+    d) Salir del submenú"""
     op2 = """2. Operaciones con rectángulos:
     a) Calcular base
     b) Calcular altura
-    c) Calcular área"""
+    c) Calcular área
+    d) Salir del submenú"""
     op3 = """3. Salir"""
     print("\n".join([op1, op2, op3]))
 
