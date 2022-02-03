@@ -33,10 +33,10 @@ def add_cliente(clientes: dict):
         print("No es una dirección de correo válida, pruebe de nuevo")
         correo = input()
     preferente = input("Dime si es preferente(s/S/n/N): ")
-    while preferente.lower() not in ["s","n"]:
+    while preferente.casefold() not in ["s","n"]:
         print("No es un valor válido, pruebe de nuevo(s/S/n/N)")
         preferente = input()
-    clientes[nif] = {"nombre": nombre, "apellidos": apellidos, "direccion": direccion, "telefono": telefono, "correo": correo, "preferente": preferente.lower() == "s"}
+    clientes[nif] = {"nombre": nombre, "apellidos": apellidos, "direccion": direccion, "telefono": telefono, "correo": correo, "preferente": preferente.casefold() == "s"}
 
 
 def eliminar_cliente(clientes: dict, nif_cliente: str):
@@ -73,7 +73,7 @@ def mostrar_preferentes(clientes: dict):
 
 def ordenar_por_apellidos(clientes: dict):
     """Ordena los clientes por apellidos y los muestra"""
-    clientes = dict(sorted(clientes.items(), key=lambda item : item[1]["apellidos"].lower()))
+    clientes = dict(sorted(clientes.items(), key=lambda item : item[1]["apellidos"].casefold()))
     mostrar_clientes(clientes)
 
 
