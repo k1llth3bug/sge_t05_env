@@ -1,7 +1,7 @@
 from typing import List
 from Socio import Socio
 from Evento import Evento
-from datetime import datetime, date
+from datetime import date
 from date_utils import es_posterior_o_igual
 
 class Club:
@@ -18,8 +18,14 @@ class Club:
         self.__lista_eventos.append(ev)
         return True
 
+    def get_lista_socios(self) -> None:
+        return self.__lista_socios
+
+    def __repr__(self) -> str:
+        return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"
+
 if __name__ == "__main__":
     c1 = Club("Satanases del infierno", "Satanases", "Cuenca")
-    c1.annadir_evento(Evento(datetime(2022, 3, 1), datetime(2022, 2, 25), "Cuenca", "Cuenca", "Alejandro M.", 0, 100))
-    c1.annadir_evento(Evento(datetime(2022, 2, 1), datetime(2022, 1, 25), "Toledo", "Toledo", "Juan J.", 0, 150))
+    c1.annadir_evento(Evento(date(2022, 6, 1), date(2022, 6, 25), "Cuenca", "Cuenca", "Alejandro M.", 0, 100))
+    c1.annadir_evento(Evento(date(2022, 5, 1), date(2022, 5, 10), "Toledo", "Toledo", "Juan J.", 0, 150))
     print(c1.get_proximos_eventos())

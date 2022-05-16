@@ -9,12 +9,9 @@ class Usuario:
     def get_dni(self) -> str:
         return self.__dni
 
-    def get_socio(self):
-        return self.__socio
-
     def __repr__(self) -> str:
-        return f"Usuario(DNI: {self.__dni}, contraseña: {cifrar_contrasena(self.__contrasena)}, último acceso: {formatear_fecha(self.__ultimo_acceso)}, es_admin: {'Si' if self.__es_admin else 'No'})"
+        return f"Usuario(DNI: {self.__dni}, contraseña: {cifrar_contrasena(self.__contrasena)}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso)}, es_admin: {'Si' if self.__es_admin else 'No'})"
 
 if __name__ == "__main__":
-    u1 = Usuario("79443146L", "passwd", datetime.now(), es_admin=True)
+    u1 = Usuario("79443146L", "passwd", datetime.now(), es_admin=False)
     print([u1])
