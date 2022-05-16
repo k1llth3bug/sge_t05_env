@@ -1,6 +1,4 @@
 from datetime import date, datetime, timedelta
-import logging
-logging.basicConfig(level=logging.DEBUG)
 
 def formatear_fecha(fecha) -> str:
     """Devuelve una fecha formateada en DD/MM/YY"""
