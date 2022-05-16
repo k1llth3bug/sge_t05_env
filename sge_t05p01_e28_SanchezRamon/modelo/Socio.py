@@ -1,9 +1,10 @@
 from typing import List
+from Usuario import Usuario
 from Bicicleta import Bicicleta
 from Reparacion import Reparacion
 
 class Socio:
-    def __init__(self, usuario, nombre: str, direccion: str, telefono: int, email: str, lista_bicicletas: List[Bicicleta], familia: List = []) -> None:
+    def __init__(self, usuario: Usuario, nombre: str, direccion: str, telefono: int, email: str, lista_bicicletas: List[Bicicleta], familia: List = []) -> None:
         self.__usuario, self.__nombre, self.__direccion, self.__telefono = usuario, nombre, direccion, telefono
         self.__email, self.__lista_bicicletas, self.__familia = email, lista_bicicletas, familia
 
@@ -19,7 +20,7 @@ class Socio:
             res.append(x for x in bici.get_lista_reparaciones())
         return res
 
-    def get_usuario(self):
+    def get_usuario(self) -> Usuario:
         return self.__usuario
 
     def set_usuario(self, usuario) -> None:

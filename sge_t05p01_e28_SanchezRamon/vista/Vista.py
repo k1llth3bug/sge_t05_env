@@ -1,12 +1,15 @@
-from pathlib import Path
-from sys import argv
+class Vista:
+    def __init__(self, controlador) -> None:
+        self.__controlador = controlador
 
-match argv:
-    case [_,"-u", user, "-p", password]:
-        print(f"Introducido usuario: {user}, contraseña: {password}, socio")
-    case [_,"-u", user, "-p", password, "-A"]:
-        print(f"Introducido usuario: {user}, contraseña: {password}, admin")
-    case [_]:
-        print(f"No hay argumentos. Uso: {Path(argv[0]).name} <-u user> <-p password> [-A]")
-    case _:
-        print(f"Argumentos incorrectos. Uso: {Path(argv[0]).name} <-u user> <-p password> [-A]")
+    def inicio(self):
+        pass
+
+    def error_login(self):
+        pass
+
+    def mostrar_opciones_admin(self):
+        pass
+
+    def mostrar_opciones_socio(self):
+        pass

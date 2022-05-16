@@ -9,6 +9,12 @@ class Usuario:
     def get_dni(self) -> str:
         return self.__dni
 
+    def es_valido(self, dni: str, contrasena: str, es_admin: bool) -> bool:
+        return self.__dni == dni and self.__contrasena == contrasena and self.__es_admin == es_admin
+
+    def dict_user(self) -> dict:
+        return {self.__dni: {"contrasena": cifrar_contrasena(self.__contrasena), "ultimo_acceso": self.__ultimo_acceso}, "es_admin": self.__es_admin}
+
     def __repr__(self) -> str:
         return f"Usuario(DNI: {self.__dni}, contraseña: {cifrar_contrasena(self.__contrasena)}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso)}, es_admin: {'Si' if self.__es_admin else 'No'})"
 

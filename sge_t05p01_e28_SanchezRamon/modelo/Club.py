@@ -1,6 +1,7 @@
 from typing import List
 from Socio import Socio
 from Evento import Evento
+from Usuario import Usuario
 from datetime import date
 from date_utils import es_posterior_o_igual
 
@@ -17,6 +18,12 @@ class Club:
                 return False
         self.__lista_eventos.append(ev)
         return True
+
+    def es_usuario_valido(self, dni: str, contrasena: str, es_admin: bool):
+        for socio in self.__lista_socios:
+            if(socio.get_usuario().es_valido(dni, contrasena, es_admin)):
+                return True
+        return False
 
     def get_lista_socios(self) -> None:
         return self.__lista_socios
