@@ -1,7 +1,6 @@
 from typing import List
 from Socio import Socio
 from Evento import Evento
-from Usuario import Usuario
 from datetime import date
 from date_utils import es_posterior_o_igual
 
