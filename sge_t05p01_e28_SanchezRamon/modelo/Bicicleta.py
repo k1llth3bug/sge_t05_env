@@ -11,7 +11,7 @@ class Bicicleta:
     def get_lista_reparaciones(self) -> List[Reparacion]: 
         return self.__lista_reparaciones
 
-    def add_reparacion(self, reparacion) -> None:
+    def add_reparacion(self, reparacion: Reparacion) -> None:
         self.__lista_reparaciones.append(reparacion)
 
     def __repr__(self) -> str:
