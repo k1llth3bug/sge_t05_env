@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
-from date_utils import formatear_fecha
-from Reparacion import Reparacion
+from modelo.date_utils import formatear_fecha
+from modelo.Reparacion import Reparacion
 
 class Bicicleta:
     def __init__(self, fecha_compra: datetime, marca: str, modelo: str, tipo: str, color: str, tamano_cuadro: float, tamano_ruedas: float, precio: float, lista_reparaciones: List[Reparacion] = []) -> None:

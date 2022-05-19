@@ -1,5 +1,4 @@
 from enum import Enum, unique
-
 @unique
 class Categoria(Enum):
     RUEDAS = 1

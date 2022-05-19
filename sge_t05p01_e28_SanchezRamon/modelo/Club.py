@@ -1,8 +1,8 @@
 from typing import List
-from Socio import Socio
-from Evento import Evento
+from modelo.Socio import Socio
+from modelo.Evento import Evento
 from datetime import date
-from date_utils import es_posterior_o_igual
+from modelo.date_utils import es_posterior_o_igual
 
 class Club:
     def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = [], lista_eventos: List[Evento] = []) -> None:

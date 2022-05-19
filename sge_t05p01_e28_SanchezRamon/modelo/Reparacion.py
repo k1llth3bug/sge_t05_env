@@ -1,7 +1,6 @@
 from datetime import datetime
-from date_utils import formatear_fecha
-from Categoria import Categoria
-
+from modelo.date_utils import formatear_fecha
+from modelo.Categoria import Categoria
 class Reparacion:
     def __init__(self, fecha: datetime, coste: float, descripcion: str, categoria: Categoria) -> None:
         self.__fecha, self.__coste, self.__description, self.__categoria = fecha, coste, descripcion, categoria

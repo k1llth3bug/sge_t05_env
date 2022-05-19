@@ -3,10 +3,10 @@ class Vista:
         self.__controlador = controlador
 
     def inicio(self):
-        pass
+        print("Inicio")
 
     def error_login(self):
-        pass
+        print("Error")
 
     def mostrar_opciones_admin(self):
         pass

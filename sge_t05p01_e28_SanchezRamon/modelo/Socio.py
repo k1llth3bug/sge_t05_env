@@ -1,7 +1,7 @@
 from typing import List
-from Usuario import Usuario
-from Bicicleta import Bicicleta
-from Reparacion import Reparacion
+from modelo.Usuario import Usuario
+from modelo.Bicicleta import Bicicleta
+from modelo.Reparacion import Reparacion
 
 class Socio:
     def __init__(self, usuario: Usuario, nombre: str, direccion: str, telefono: int, email: str, lista_bicicletas: List[Bicicleta], familia: List = []) -> None:

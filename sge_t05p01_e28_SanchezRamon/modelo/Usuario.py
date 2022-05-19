@@ -1,6 +1,6 @@
 from datetime import datetime
-from date_utils import formatear_fecha
-from cipher_utils import cifrar_contrasena
+from modelo.date_utils import formatear_fecha
+from modelo.cipher_utils import cifrar_contrasena
 
 class Usuario:
     def __init__(self, dni: str, contrasena: str, ultimo_acceso: datetime, es_admin: bool = False) -> None:

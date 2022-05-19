@@ -1,7 +1,7 @@
 from datetime import date
-from date_utils import formatear_fecha
+from modelo.date_utils import formatear_fecha
 from typing import List
-from Socio import Socio
+from modelo.Socio import Socio
 
 class Evento:
     def __init__(self, fecha: date, fecha_inscripcion: date, localidad: str, provincia: str, organizador: str, km_totales: float, precio: float) -> None:
