@@ -4,7 +4,7 @@ from modelo.Bicicleta import Bicicleta
 from modelo.Reparacion import Reparacion
 
 class Socio:
-    def __init__(self, usuario: Usuario, nombre: str, direccion: str, telefono: int, email: str, lista_bicicletas: List[Bicicleta], familia: List = []) -> None:
+    def __init__(self, usuario: Usuario, nombre: str = "", direccion: str = "", telefono: int = 6666666666, email: str = "x@x.com", lista_bicicletas: List[Bicicleta] = [], familia: List = []) -> None:
         self.__usuario, self.__nombre, self.__direccion, self.__telefono = usuario, nombre, direccion, telefono
         self.__email, self.__lista_bicicletas, self.__familia = email, lista_bicicletas, familia
 

@@ -1,9 +1,8 @@
 from datetime import datetime
 from modelo.date_utils import formatear_fecha
-from modelo.cipher_utils import cifrar_contrasena
 
 class Usuario:
-    def __init__(self, dni: str, contrasena: str, ultimo_acceso: datetime, es_admin: bool = False) -> None:
+    def __init__(self, dni: str, contrasena: str, ultimo_acceso: datetime = datetime.today(), es_admin: bool = False) -> None:
         self.__dni, self.__contrasena, self.__ultimo_acceso , self.__es_admin = dni, contrasena, ultimo_acceso, es_admin
 
     def get_dni(self) -> str:
@@ -13,10 +12,10 @@ class Usuario:
         return self.__dni == dni and self.__contrasena == contrasena and self.__es_admin == es_admin
 
     def dict_user(self) -> dict:
-        return {self.__dni: {"contrasena": cifrar_contrasena(self.__contrasena), "ultimo_acceso": self.__ultimo_acceso}, "es_admin": self.__es_admin}
+        return {self.__dni: {"contrasena": self.__contrasena, "ultimo_acceso": self.__ultimo_acceso}, "es_admin": self.__es_admin}
 
     def __repr__(self) -> str:
-        return f"Usuario(DNI: {self.__dni}, contraseña: {cifrar_contrasena(self.__contrasena)}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso)}, es_admin: {'Si' if self.__es_admin else 'No'})"
+        return f"Usuario(DNI: {self.__dni}, contraseña: {self.__contrasena}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso)}, es_admin: {'Si' if self.__es_admin else 'No'})"
 
 if __name__ == "__main__":
     u1 = Usuario("79443146L", "passwd", datetime.now(), es_admin=False)

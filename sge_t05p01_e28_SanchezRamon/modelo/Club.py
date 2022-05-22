@@ -3,10 +3,23 @@ from modelo.Socio import Socio
 from modelo.Evento import Evento
 from datetime import date
 from modelo.date_utils import es_posterior_o_igual
+from os.path import exists
+from json import dump, load
+from modelo.Usuario import Usuario
+ARCHIVO_SOCIOS = "socios.json"
+ARCHIVO_BICICLETAS = "bicicletas.json"
 
 class Club:
     def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = [], lista_eventos: List[Evento] = []) -> None:
         self.__nombre, self.__cif, self.__sede_social, self.__lista_socios, self.__lista_eventos = nombre, cif, sede_social, lista_socios, lista_eventos
+        self.comprobar_archivos()
+
+    def comprobar_archivos(self):
+        if exists(ARCHIVO_SOCIOS):
+            with open(ARCHIVO_SOCIOS, "r", encoding="UTF-8") as f:
+                dict_socios = load(f)
+        else:
+            self.__lista_socios.append(Socio(Usuario("11111111A", "admin", es_admin=True)))
 
     def get_proximos_eventos(self) -> List[Evento]:
         return [ev for ev in self.__lista_eventos if es_posterior_o_igual(ev.get_fecha(), date.today())]
