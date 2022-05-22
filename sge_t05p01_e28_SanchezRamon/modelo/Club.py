@@ -31,9 +31,9 @@ class Club:
         self.__lista_eventos.append(ev)
         return True
 
-    def es_usuario_valido(self, dni: str, contrasena: str, es_admin: bool):
+    def comprobar_usuario(self, dni: str, contrasena: str, es_admin: bool):
         for socio in self.__lista_socios:
-            if(socio.get_usuario().es_valido(dni, contrasena, es_admin)):
+            if socio.get_usuario().es_valido(dni, contrasena, es_admin):
                 return True
         return False
 
