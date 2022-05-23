@@ -1,0 +1,12 @@
+[
+    {
+        "11111111A": {
+            "nombre": "",
+            "direccion": "",
+            "telefono": 6666666666,
+            "email": "",
+            "lista_bicicletas": [],
+            "familia": {}
+        }
+    }
+]
