@@ -8,15 +8,14 @@ class Usuario:
     def get_dni(self) -> str:
         return self.__dni
 
-    def es_valido(self, dni: str, contrasena: str, es_admin: bool) -> bool:
-        return self.__dni == dni and self.__contrasena == contrasena and self.__es_admin == es_admin
+    def get_contrasenna(self) -> str:
+        return self.__contrasena
+
+    def is_admin(self) -> bool:
+        return self.__es_admin
 
     def dict_user(self) -> dict:
-        return {self.__dni: {"contrasena": self.__contrasena, "ultimo_acceso": self.__ultimo_acceso}, "es_admin": self.__es_admin}
+        return {self.__dni: {"contrasena": self.__contrasena, "ultimo_acceso": self.__ultimo_acceso.isoformat(), "es_admin": self.__es_admin}}
 
     def __repr__(self) -> str:
-        return f"Usuario(DNI: {self.__dni}, contraseña: {self.__contrasena}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso)}, es_admin: {'Si' if self.__es_admin else 'No'})"
-
-if __name__ == "__main__":
-    u1 = Usuario("79443146L", "passwd", datetime.now(), es_admin=False)
-    print([u1])
+        return f"Usuario(DNI: {self.__dni}, contraseña: {self.__contrasena}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso).replace('T', ' ')}, es_admin: {'Si' if self.__es_admin else 'No'})"

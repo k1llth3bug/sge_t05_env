@@ -4,15 +4,24 @@ from modelo.Bicicleta import Bicicleta
 from modelo.Reparacion import Reparacion
 
 class Socio:
-    def __init__(self, usuario: Usuario, nombre: str = "", direccion: str = "", telefono: int = 6666666666, email: str = "x@x.com", lista_bicicletas: List[Bicicleta] = [], familia: List = []) -> None:
+    def __init__(self, usuario: Usuario, nombre: str = "", direccion: str = "", telefono: int = 6666666666, email: str = "", lista_bicicletas: List[Bicicleta] = [], familia: dict = {}) -> None:
         self.__usuario, self.__nombre, self.__direccion, self.__telefono = usuario, nombre, direccion, telefono
         self.__email, self.__lista_bicicletas, self.__familia = email, lista_bicicletas, familia
 
-    def annadir_miembro_familia(self, miembro):
-        self.__familia.append(miembro)
+    def annadir_miembro_familia(self, dni_miembro, tipo):
+        if dni_miembro != self.__usuario.get_dni():
+            if tipo == "pareja" and len(self.__familia) == 0 and dni_miembro not in self.__familia["hijos"]:
+                self.__familia["pareja"] = dni_miembro
+            elif dni_miembro not in self.__familia["hijos"] and dni_miembro not in self.__familia["pareja"]:
+                self.__familia["hijos"].append(dni_miembro)
+            return True
+        return False
 
     def get_lista_bicis(self) -> List[Bicicleta]:
         return self.__lista_bicicletas
+
+    def dict_socio(self):
+        return {self.__usuario.get_dni(): {"nombre": self.__nombre, "direccion": self.__direccion, "telefono": self.__telefono, "email": self.__email, "lista_bicicletas": [b.dict_bicicleta() for b in self.__lista_bicicletas], "familia": self.__familia}}
 
     def get_lista_mantinimientos(self) -> List[Reparacion]:
         res = []
@@ -28,11 +37,3 @@ class Socio:
 
     def __repr__(self) -> str:
         return f"Socio(usuario: {self.__usuario}, nombre: {self.__nombre}, dirección: {self.__direccion}, teléfono: {self.__telefono}, email: {self.__email})"
-
-if __name__ == "__main__":
-    from Usuario import Usuario
-    from datetime import datetime
-
-    u1 = Usuario("11111111A", "admin", datetime.now(), es_admin=True)
-    s1 = Socio(u1, "Ramón", "Tomelloso 46", 666666666, "r@r.com", None)
-    print([s1])

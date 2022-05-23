@@ -8,6 +8,10 @@ class Bicicleta:
         self.__fecha_compra, self.__marca, self.__modelo, self.__tipo, self.__color = fecha_compra, marca, modelo, tipo, color
         self.__tamano_cuadro, self.__tamano_ruedas, self.__precio, self.__lista_reparaciones = tamano_cuadro, tamano_ruedas, precio, lista_reparaciones
 
+    def dict_bicicleta(self):
+        return {"fecha_compra": self.__fecha_compra.isoformat(), "marca": self.__marca, "modelo": self.__modelo, "tipo": self.__tipo, "color": self.__color,
+         "tamano_cuadro": self.__tamano_cuadro, "tamano_ruedas": self.__tamano_ruedas, "precio": self.__precio, "reparaciones": [r.dict_reparcion() for r in self.__lista_reparaciones]}
+
     def get_lista_reparaciones(self) -> List[Reparacion]: 
         return self.__lista_reparaciones
 

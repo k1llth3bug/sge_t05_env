@@ -8,6 +8,3 @@ class Categoria(Enum):
     DELANTERA = 5
     TRASERA = 6
     OTRAS = 0
-        
-if __name__ == "__main__":
-    print(list(Categoria))
