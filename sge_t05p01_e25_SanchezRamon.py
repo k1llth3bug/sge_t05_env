@@ -22,7 +22,8 @@ class Punto:
                 else:
                     return "Eje Y"
             case [x, 0]:
-                return "Eje X"
+                if x != 0:
+                    return "Eje X"
             case [x,y]:
                 if x>=0 and y>=0:
                     return "Primer Cuadrante"
@@ -119,7 +120,7 @@ def mostrar_menu():
 def opciones_puntos(p1: Punto, p2: Punto):
     """Pide una opción del submenú de puntos, y muestra el resultado correspondiente"""
     op = input("Dime una opción (puntos): ")
-    while not op=="d":
+    while op != "d":
         match op:
             case "a":
                     print(f"{p1} -> {p1.cuadrante()}, {p2} -> {p2.cuadrante()}")
@@ -130,7 +131,7 @@ def opciones_puntos(p1: Punto, p2: Punto):
             case "d":
                 print("Saliendo del submenú")
             case _:
-                print("No es una opción válida")
+                print("No es una opción válida de punto")
         op = input("Dime otra opción: ")
 
 
@@ -138,7 +139,7 @@ def opciones_rectangulo(r1: Rectangulo):
     """Pide, si es un rectángulo, una opción del submenú de rectángulo, y muestra el resultado correspondiente"""
     if r1.es_rectangulo():
         op = input("Dime una opción (rectángulo): ")
-        while not op=="d":
+        while op != "d":
             match op:
                 case "a":
                     print(f"Base: {r1.get_base()}")
@@ -149,17 +150,17 @@ def opciones_rectangulo(r1: Rectangulo):
                 case "d":
                     print("Saliendo del submenú")
                 case _:
-                    print("No es una opción válida")
+                    print("No es una opción válida de rectángulo")
             op = input("Dime otra opción:")
     else:
         print("No es un rectángulo")
 
 p1, p2 = pedir_puntos_distintos()
 opcion = 0
-while not opcion==3:
+while opcion != 3:
     mostrar_menu()
     opcion = pedir_entero("Dime una opción: ")
-    while not opcion == 3:
+    while opcion != 3:
         match opcion:
             case 1:
                 opciones_puntos(p1, p2)
@@ -168,6 +169,6 @@ while not opcion==3:
             case 3:
                 print("Saliendo...")
             case _:
-                print("No es una opción válida")
+                print("No es una opción principal válida")
         mostrar_menu()
         opcion = pedir_entero("Dime otra opción: ")
