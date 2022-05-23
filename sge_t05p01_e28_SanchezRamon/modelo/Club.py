@@ -66,9 +66,3 @@ class Club:
 
     def __repr__(self) -> str:
         return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"
-
-if __name__ == "__main__":
-    c1 = Club("Satanases del infierno", "Satanases", "Cuenca")
-    c1.annadir_evento(Evento(date(2022, 6, 30), date(2022, 6, 25), "Cuenca", "Cuenca", "Alejandro M.", 0, 100))
-    c1.annadir_evento(Evento(date(2022, 5, 1), date(2022, 5, 10), "Toledo", "Toledo", "Juan J.", 0, 150))
-    print(c1.get_proximos_eventos())

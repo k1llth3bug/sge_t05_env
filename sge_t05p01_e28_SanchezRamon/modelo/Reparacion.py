@@ -10,7 +10,3 @@ class Reparacion:
 
     def __repr__(self) -> str:
         return f"Reparación(fecha: {formatear_fecha(self.__fecha)}, coste: {self.__coste}, descripción: {self.__descripcion}, categoría: {self.__categoria})"
-
-if __name__ == "__main__":
-    r1 = Reparacion(datetime.now(), 20, "Test", Categoria.OTRAS)
-    print(r1)
