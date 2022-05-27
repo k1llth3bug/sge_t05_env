@@ -18,7 +18,6 @@ class Controlador:
                 self.__club.guardar_datos()
             case 1:
                 self.__vista.listar_socios(self.__club.get_lista_socios())
-                pass
             case 2: 
                 #TODO: Insertar socio
                 pass
