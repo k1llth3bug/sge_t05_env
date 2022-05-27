@@ -8,6 +8,12 @@ class Bicicleta:
         self.__fecha_compra, self.__marca, self.__modelo, self.__tipo, self.__color = fecha_compra, marca, modelo, tipo, color
         self.__tamano_cuadro, self.__tamano_ruedas, self.__precio, self.__lista_reparaciones = tamano_cuadro, tamano_ruedas, precio, lista_reparaciones
 
+    @classmethod
+    def from_dict(cls, dict_bici: dict):
+        for datos_bici in dict_bici.values():
+            return cls(datetime.fromisoformat(datos_bici["fecha_compra"]), datos_bici["marca"], datos_bici["modelo"], datos_bici["tipo"], datos_bici["color"],
+             datos_bici["tamano_cuadro"], datos_bici["tamano_ruedas"], datos_bici["precio"], [Reparacion.from_dict(r) for r in datos_bici["reparaciones"]])
+
     def dict_bicicleta(self):
         return {"fecha_compra": self.__fecha_compra.isoformat(), "marca": self.__marca, "modelo": self.__modelo, "tipo": self.__tipo, "color": self.__color,
          "tamano_cuadro": self.__tamano_cuadro, "tamano_ruedas": self.__tamano_ruedas, "precio": self.__precio, "reparaciones": [r.dict_reparcion() for r in self.__lista_reparaciones]}

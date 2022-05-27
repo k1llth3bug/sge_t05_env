@@ -20,6 +20,11 @@ class Socio:
     def get_lista_bicis(self) -> List[Bicicleta]:
         return self.__lista_bicicletas
 
+    @classmethod
+    def from_dict(cls, dict_socio: dict):
+        for datos in dict_socio.values():
+            return cls(None, datos["nombre"], datos["direccion"], datos["telefono"], datos["email"], [Bicicleta.from_dict(b) for b in datos["lista_bicicletas"]], datos["familia"])
+
     def dict_socio(self):
         return {self.__usuario.get_dni(): {"nombre": self.__nombre, "direccion": self.__direccion, "telefono": self.__telefono, "email": self.__email, "lista_bicicletas": [b.dict_bicicleta() for b in self.__lista_bicicletas], "familia": self.__familia}}
 

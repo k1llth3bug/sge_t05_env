@@ -2,25 +2,29 @@ class Vista:
     def __init__(self, controlador) -> None:
         self.__controlador = controlador
 
-    def inicio(self, es_admin: bool):
+    def mostrar_login(self, usuario) -> None:
+        print(f"Usuario: {usuario.get_dni()}")
+        print(f"Último acceso: {usuario.get_ultimo_acceso()}")
+
+    def inicio(self, es_admin: bool) -> None:
         if es_admin:
             self.mostrar_opciones_admin()
         else:
             self.mostrar_opciones_socio()
 
-    def error_login(self, login_error):
+    def error_login(self, login_error) -> None:
         print(login_error)
 
-    def listar_socios(self, lista_socios):
+    def listar_socios(self, lista_socios) -> None:
         print("\n".join([repr(s) for s in lista_socios]))
 
-    def listar_eventos(self, lista_eventos):
+    def listar_eventos(self, lista_eventos) -> None:
         if len(lista_eventos) > 0:
             print("\n".join([repr(ev) for ev in lista_eventos]))
         else:
             print("No hay próximos eventos")
 
-    def pedir_entero(self, minimo, maximo):
+    def pedir_entero(self, minimo, maximo) -> int:
         valido = False
         res = 0
         while not valido:
@@ -29,12 +33,12 @@ class Vista:
                 if minimo <= res <= maximo:
                     valido = True
                 else:
-                    print(f"No está entre {minimo} y {maximo}")
+                    print(f"No está entre {minimo} y {maximo}, pruebe de nuevo")
             except ValueError:
                 print("No es un número, pruebe de nuevo")
         return res
 
-    def mostrar_opciones_admin(self):
+    def mostrar_opciones_admin(self) -> None:
         opcion = -1
         lista_opciones = ["1. Ver listado completo de socios.","2. Insertar un nuevo socio.",
         "3. Añadir a un socio su familia.","4. Ver listado completo de los próximos eventos.",
@@ -47,7 +51,7 @@ class Vista:
             opcion = self.pedir_entero(0, len(lista_opciones)-1)
             self.__controlador.opciones_admin(opcion)
 
-    def mostrar_opciones_socio(self):
+    def mostrar_opciones_socio(self) -> None:
         opcion = -1
         lista_opciones = ["1. Ver mis próximos eventos y lista de inscritos.","2. Inscribirme a evento.",
         "3. Ver mis bicicletas .","4. Ver mis reparaciones.", "5. Añadir nueva bicicleta.",

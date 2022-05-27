@@ -3,10 +3,11 @@ from modelo.LoginError import LoginError
 from vista.Vista import Vista
 class Controlador:
     def __init__(self, club: Club, id_usuario: str, contrasena: str, es_admin: bool) -> None:
-        self.__club, self.__id_usuario, self.__contrasena, self.__es_admin = club, id_usuario, contrasena, es_admin
+        self.__club = club
         self.__vista = Vista(self)
         login_error = club.comprobar_usuario(id_usuario, contrasena, es_admin)
         if login_error == LoginError.NO_ERROR:
+            self.__vista.mostrar_login(club.get_logged_user())
             self.__vista.inicio(es_admin)
         else:
             self.__vista.error_login(login_error)

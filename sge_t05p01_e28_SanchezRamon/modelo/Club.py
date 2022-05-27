@@ -14,20 +14,23 @@ ARCHIVO_BICICLETAS = "bicicletas.json"
 class Club:
     def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = [], lista_eventos: List[Evento] = []) -> None:
         self.__nombre, self.__cif, self.__sede_social, self.__lista_socios, self.__lista_eventos = nombre, cif, sede_social, lista_socios, lista_eventos
+        self.__logged_user = None
         self.comprobar_archivos()
 
     def comprobar_archivos(self):
-        if exists(ARCHIVO_USUARIOS):
-            self.__cargar_usuarios()
+        if exists(ARCHIVO_USUARIOS) and exists(ARCHIVO_SOCIOS):
+            self.__cargar_usuarios_socios()
         else:
             self.__lista_socios.append(Socio(Usuario("11111111A", "admin", es_admin=True), "admin"))
 
-    def __cargar_usuarios(self):
-        with open(ARCHIVO_USUARIOS, "r", encoding="UTF-8") as f:
-            list_usuarios = load(f)
-            for usuario in list_usuarios:
-                for dni, datos in usuario.items():
-                    self.__lista_socios.append(Socio(Usuario(dni, datos["contrasena"], datetime.fromisoformat(datos["ultimo_acceso"]), datos["es_admin"])))
+    def __cargar_usuarios_socios(self):
+        with open(ARCHIVO_USUARIOS, "r", encoding="UTF-8") as f_users, open(ARCHIVO_SOCIOS, "r", encoding="UTF-8") as f_socios:
+            list_usuarios = load(f_users)
+            list_socios = load(f_socios)
+            for dict_usuario, dict_socio in zip(list_usuarios, list_socios):
+                socio = Socio.from_dict(dict_socio)
+                socio.set_usuario(Usuario.from_dict(dict_usuario))
+                self.__lista_socios.append(socio)
 
     def guardar_datos(self):
         self.__guardar_socios()
@@ -59,7 +62,11 @@ class Club:
         elif usuarios[0].is_admin() != es_admin:
             return LoginError.PERMISSION_ERROR
         else:
+            self.__logged_user = usuarios[0]
             return LoginError.NO_ERROR
+
+    def get_logged_user(self) -> Usuario:
+        return self.__logged_user
 
     def get_lista_socios(self) -> List[Socio]:
         return self.__lista_socios
