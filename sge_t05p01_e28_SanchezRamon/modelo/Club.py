@@ -19,6 +19,12 @@ class Club:
         self.__logged_user = None
         self.comprobar_archivos()
 
+    def get_lista_socios(self) -> List[Socio]:
+        return self.__lista_socios
+
+    def get_logged_user(self) -> Usuario:
+        return self.__logged_user
+
     def comprobar_archivos(self):
         if exists(ARCHIVO_USUARIOS) and exists(ARCHIVO_SOCIOS) and exists(ARCHIVO_EVENTOS):
             self.__cargar_usuarios_socios()
@@ -86,12 +92,6 @@ class Club:
         else:
             self.__logged_user = usuarios[0]
             return LoginError.NO_ERROR
-
-    def get_logged_user(self) -> Usuario:
-        return self.__logged_user
-
-    def get_lista_socios(self) -> List[Socio]:
-        return self.__lista_socios
 
     def __repr__(self) -> str:
         return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"
