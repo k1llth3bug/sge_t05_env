@@ -62,6 +62,9 @@ class Club:
         with open(ARCHIVO_EVENTOS, "w", encoding="UTF-8") as f:
             dump([ev.to_dict() for ev in self.__lista_eventos], f, indent=4)
 
+    def get_proximos_eventos_socio(self, dni_socio) -> List[Evento]:
+        return [ev for ev in self.__lista_eventos if es_posterior_o_igual(ev.get_fecha(), date.today()) and ev.check_inscrito(dni_socio)]
+
     def get_proximos_eventos(self) -> List[Evento]:
         return [ev for ev in self.__lista_eventos if es_posterior_o_igual(ev.get_fecha(), date.today())]
 

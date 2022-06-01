@@ -3,7 +3,7 @@ from modelo.LoginError import LoginError
 from vista.Vista import Vista
 class Controlador:
     def __init__(self, club: Club, id_usuario: str, contrasena: str, es_admin: bool) -> None:
-        self.__club = club
+        self.__club, self.__id_usuario = club, id_usuario
         self.__vista = Vista(self)
         login_error = club.comprobar_usuario(id_usuario, contrasena, es_admin)
         if login_error == LoginError.NO_ERROR:
@@ -12,7 +12,7 @@ class Controlador:
         else:
             self.__vista.error_login(login_error)
 
-    def opciones_admin(self, opcion):
+    def opciones_admin(self, opcion: int) -> None:
         match opcion:
             case 0:
                 self.__club.guardar_datos()
@@ -40,4 +40,32 @@ class Controlador:
                 pass
             case 9:
                 #TODO: Realizar pago cuota
+                pass
+
+    def opciones_socio(self, opcion: int) -> None:
+        match opcion:
+            case 0:
+                self.__club.guardar_datos()
+            case 1:
+                self.__vista.listar_eventos(self.__club.get_proximos_eventos_socio(self.__id_usuario))
+            case 2:
+                #TODO: Inscribir socio
+                pass
+            case 3:
+                #TODO: Listar bicicletas
+                pass
+            case 4:
+                #TODO: Listar reparaciones
+                pass
+            case 5:
+                #TODO: Añadir bici
+                pass
+            case 6:
+                #TODO: Añadir reparacion
+                pass
+            case 7:
+                #TODO: Ver familia
+                pass
+            case 8:
+                #TODO: Ver historico
                 pass

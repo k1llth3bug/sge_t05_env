@@ -25,6 +25,9 @@ class Evento:
     def get_organizador(self) -> str:
         return self.__organizador
 
+    def get_socios_inscritos(self) -> List[Socio]:
+        return self.__lista_socios_inscritos
+
     def set_socios_inscritos(self, lista_socios: List[Socio]) -> None:
         self.__lista_socios_inscritos = lista_socios
 
@@ -32,13 +35,14 @@ class Evento:
         return self.__fecha != ev.get_fecha() and self.__organizador != ev.get_organizador()
 
     def inscribir_socio(self, socio: Socio) -> bool:
-        dni_usuario = socio.get_usuario().get_dni()
-        for s in self.__lista_socios_inscritos:
-            socio_inscrito = s.get_usuario()
-            if dni_usuario == socio_inscrito.get_dni():
-                return False
-        self.__lista_socios_inscritos.append(socio)
-        return True
+        if self.check_inscrito(socio.get_usuario().get_dni()):
+            return False
+        else:
+            self.__lista_socios_inscritos.append(socio)
+            return True
+
+    def check_inscrito(self, dni_socio: str) -> bool:
+        return len([s for s in self.__lista_socios_inscritos if s.get_usuario().get_dni() == dni_socio]) > 0
 
     def __repr__(self) -> str:
         return f"Evento(fecha: {formatear_fecha(self.__fecha)}, inscripción: {formatear_fecha(self.__fecha_inscripcion)}, localidad: {self.__localidad}, provincia: {self.__provincia}, organizador: {self.__organizador}, km totales: {self.__km_totales}, precio: {self.__precio})"
