@@ -4,9 +4,11 @@ from modelo.Bicicleta import Bicicleta
 from modelo.Reparacion import Reparacion
 
 class Socio:
-    def __init__(self, usuario: Usuario, nombre: str = "", direccion: str = "", telefono: int = 6666666666, email: str = "", lista_bicicletas: List[Bicicleta] = [], familia: dict = {}) -> None:
+    def __init__(self, usuario: Usuario, nombre: str = "", direccion: str = "", telefono: int = 6666666666, email: str = "", lista_bicicletas: List[Bicicleta] = None, familia: dict = None) -> None:
         self.__usuario, self.__nombre, self.__direccion, self.__telefono = usuario, nombre, direccion, telefono
-        self.__email, self.__lista_bicicletas, self.__familia = email, lista_bicicletas, familia
+        self.__email = email
+        self.__lista_bicicletas = [] if lista_bicicletas is None else lista_bicicletas
+        self.__familia = {} if familia is None else familia
 
     def annadir_miembro_familia(self, dni_miembro, tipo):
         if dni_miembro != self.__usuario.get_dni():
