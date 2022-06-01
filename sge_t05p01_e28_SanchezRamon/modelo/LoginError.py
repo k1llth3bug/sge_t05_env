@@ -1,6 +1,5 @@
 from enum import IntEnum, unique
 
-
 @unique
 class LoginError(IntEnum):
     USER_ERROR = 1
