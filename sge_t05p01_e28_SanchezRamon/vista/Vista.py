@@ -26,7 +26,10 @@ class Vista:
 
     def listar_eventos_socio_inscrito(self, lista_eventos_socio_inscrito: list) -> None:
         if len(lista_eventos_socio_inscrito) > 0:
-            print("\n".join([f"Socios inscritos en {ev}: {'\n'.join([repr(s) for s in ev.get_socios_inscritos()])}" for ev in lista_eventos_socio_inscrito]))
+            for ev in lista_eventos_socio_inscrito:
+                print(f"Socios inscritos en {ev}:")
+                for socio in ev.get_socios_inscritos():
+                    print(socio)
         else:
             print("No hay próximos eventos")
 
@@ -41,11 +44,15 @@ class Vista:
             if len(lista_reparaciones) > 0:
                 print(f"La bicicleta {bici} no tiene reparaciones")
             else:
-                print(f"Las reparaciones de la bicicleta {bici} son: {'\n'.join([repr(r) for r in lista_reparaciones])}")
+                print(f"Las reparaciones de la bicicleta {bici} son:")
+                print("\n".join([repr(r) for r in lista_reparaciones]))
 
     def listar_familia(self, familia: dict) -> None:
         for tipo, miembros in familia.items():
             print(f"{tipo}: {miembros}")
+
+    def pedir_num_evento(self, lista_eventos) -> int:
+        return self.pedir_entero(1, len(lista_eventos))
 
     def pedir_entero(self, minimo, maximo) -> int:
         valido = False

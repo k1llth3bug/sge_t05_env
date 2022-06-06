@@ -49,8 +49,9 @@ class Controlador:
             case 1:
                 self.__vista.listar_eventos_socio_inscrito(self.__club.get_proximos_eventos_socio(self.__id_usuario))
             case 2:
-                #TODO: Inscribir socio
-                pass
+                eventos_abiertos = self.__club.get_proximos_eventos()
+                self.__vista.listar_eventos(eventos_abiertos)
+                self.__club.inscribir_socio_evento(self.__vista.pedir_num_evento(eventos_abiertos))
             case 3:
                 self.__vista.listar_bicicletas(self.__club.get_listado_bicicletas())
             case 4:

@@ -10,13 +10,14 @@ class Socio:
         self.__lista_bicicletas = [] if lista_bicicletas is None else lista_bicicletas
         self.__familia = {} if familia is None else familia
 
-    def annadir_miembro_familia(self, dni_miembro, tipo):
+    def annadir_miembro_familia(self, dni_miembro, tipo) -> bool:
         if dni_miembro != self.__usuario.get_dni():
             if tipo == "pareja" and len(self.__familia) == 0 and dni_miembro not in self.__familia["hijos"]:
                 self.__familia["pareja"] = dni_miembro
+                return True
             elif dni_miembro not in self.__familia["hijos"] and dni_miembro not in self.__familia["pareja"]:
                 self.__familia["hijos"].append(dni_miembro)
-            return True
+                return True
         return False
 
     def get_familia(self) -> dict:

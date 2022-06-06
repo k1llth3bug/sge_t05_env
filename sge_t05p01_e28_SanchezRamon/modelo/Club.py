@@ -107,5 +107,8 @@ class Club:
     def get_familia_socio(self):
         return self.__logged_socio.get_familia()
 
+    def inscribir_socio_evento(self, num_evento: int):
+        self.get_proximos_eventos()[num_evento].inscribir_socio(self.__logged_socio)
+
     def __repr__(self) -> str:
         return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"
