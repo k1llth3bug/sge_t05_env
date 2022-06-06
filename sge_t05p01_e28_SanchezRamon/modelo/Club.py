@@ -1,7 +1,7 @@
 from typing import List
 from modelo.Socio import Socio
 from modelo.Evento import Evento
-from datetime import date
+from datetime import date, datetime
 from modelo.date_utils import es_posterior_o_igual
 from os.path import exists
 from json import dump, load
@@ -97,6 +97,13 @@ class Club:
                 self.__logged_user = usuario
                 self.__logged_socio = socios[0]
                 return LoginError.NO_ERROR
+
+    def actualizar_logged_usuario(self):
+        self.__logged_user.set_ultimo_acceso(datetime.now())
+        dni_usuario = self.__logged_user.get_dni()
+        for socio in self.__lista_socios:
+            if socio.get_usuario().get_dni() == dni_usuario:
+                socio.set_usuario(self.__logged_user)
 
     def get_listado_bicicletas(self) -> List[Bicicleta]:
         return self.__logged_socio.get_lista_bicis()

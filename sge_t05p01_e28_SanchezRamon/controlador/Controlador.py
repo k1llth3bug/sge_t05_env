@@ -8,6 +8,7 @@ class Controlador:
         login_error = club.comprobar_usuario(id_usuario, contrasena, es_admin)
         if login_error == LoginError.NO_ERROR:
             self.__vista.mostrar_login(club.get_logged_user())
+            club.actualizar_logged_usuario()
             self.__vista.inicio(es_admin)
         else:
             self.__vista.error_login(login_error)
