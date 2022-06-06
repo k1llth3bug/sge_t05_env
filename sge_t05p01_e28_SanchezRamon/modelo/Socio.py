@@ -56,4 +56,4 @@ class Socio:
         return res
 
     def __repr__(self) -> str:
-        return f"Socio(usuario: {self.__usuario}, nombre: {self.__nombre}, dirección: {self.__direccion}, teléfono: {self.__telefono}, email: {self.__email}, descuento: {self.__descuento})"
+        return "\n".join([f"Datos de usuario: {self.__usuario}", f"Nombre: {self.__nombre}, dirección: {self.__direccion}, teléfono: {self.__telefono}, email: {self.__email}, descuento: {100*self.__descuento}%"])

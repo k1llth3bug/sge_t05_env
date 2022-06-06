@@ -1,5 +1,5 @@
 from datetime import date
-from modelo.date_utils import formatear_fecha
+from modelo.date_utils import formatear_fecha_iso, formatear_fecha
 from typing import List
 from modelo.Socio import Socio
 
@@ -45,4 +45,4 @@ class Evento:
         return len([s for s in self.__lista_socios_inscritos if s.get_usuario().get_dni() == dni_socio]) > 0
 
     def __repr__(self) -> str:
-        return f"Evento(fecha: {formatear_fecha(self.__fecha)}, inscripción: {formatear_fecha(self.__fecha_inscripcion)}, localidad: {self.__localidad}, provincia: {self.__provincia}, organizador: {self.__organizador}, km totales: {self.__km_totales}, precio: {self.__precio})"
+        return f"Fecha: {formatear_fecha(self.__fecha)}, inscripción: {formatear_fecha(self.__fecha_inscripcion)}, localidad: {self.__localidad}, provincia: {self.__provincia}, organizador: {self.__organizador}, km totales: {self.__km_totales}, precio: {self.__precio}€"

@@ -4,7 +4,7 @@ class Vista:
 
     def mostrar_login(self, usuario) -> None:
         print(f"Usuario: {usuario.get_dni()}")
-        print(f"Último acceso: {usuario.get_ultimo_acceso()}")
+        print(f"Último acceso: {usuario.get_ultimo_acceso_as_str()}")
 
     def inicio(self, es_admin: bool) -> None:
         if es_admin:
@@ -16,7 +16,7 @@ class Vista:
         print(login_error)
 
     def listar_socios(self, lista_socios: list) -> None:
-        print("\n".join([repr(s) for s in lista_socios]))
+        print("\n\n".join([repr(s) for s in lista_socios]))
 
     def listar_eventos(self, lista_eventos: list) -> None:
         if len(lista_eventos) > 0:
@@ -133,6 +133,8 @@ class Vista:
             print("Dime una opción: ")
             opcion = self.pedir_entero(0, len(lista_opciones)-1)
             self.__controlador.opciones_admin(opcion)
+            if opcion != 0:
+                input("Presione una tecla para continuar...")
 
     def mostrar_opciones_socio(self) -> None:
         opcion = -1
@@ -145,3 +147,5 @@ class Vista:
             print("Dime una opción: ")
             opcion = self.pedir_entero(0, len(lista_opciones)-1)
             self.__controlador.opciones_socio(opcion)
+            if opcion != 0:
+                input("Presione una tecla para continuar...")

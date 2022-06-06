@@ -14,6 +14,9 @@ class Usuario:
     def get_ultimo_acceso(self) -> datetime:
         return self.__ultimo_acceso
 
+    def get_ultimo_acceso_as_str(self) -> str:
+        return formatear_fecha(self.__ultimo_acceso)
+
     def is_admin(self) -> bool:
         return self.__es_admin
 
@@ -29,4 +32,4 @@ class Usuario:
         return {self.__dni: {"contrasena": self.__contrasena, "ultimo_acceso": self.__ultimo_acceso.isoformat(), "es_admin": self.__es_admin}}
 
     def __repr__(self) -> str:
-        return f"Usuario(DNI: {self.__dni}, contraseña: {self.__contrasena}, ultimo_acceso: {formatear_fecha(self.__ultimo_acceso).replace('T', ' ')}, es_admin: {'Si' if self.__es_admin else 'No'})"
+        return f"DNI: {self.__dni}, Contraseña: {self.__contrasena}, Último acceso: {formatear_fecha(self.__ultimo_acceso)}, admin: {'Si' if self.__es_admin else 'No'}"

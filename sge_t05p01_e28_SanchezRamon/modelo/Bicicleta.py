@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from modelo.date_utils import formatear_fecha
+from modelo.date_utils import formatear_fecha_iso, formatear_fecha
 from modelo.Reparacion import Reparacion
 
 class Bicicleta:
@@ -32,4 +32,4 @@ class Bicicleta:
         self.__lista_reparaciones.append(reparacion)
 
     def __repr__(self) -> str:
-        return f"Bicicleta(fecha de compra: {formatear_fecha(self.__fecha_compra)}, marca: {self.__marca}, modelo: {self.__modelo}, tipo: {self.__tipo}, color: {self.__color}, tamaño del cuadro: {self.__tamano_cuadro}, tamaño de las ruedas: {self.__tamano_ruedas}, precio: {self.__precio})"
+        return f"Fecha de compra: {formatear_fecha(self.__fecha_compra)}, marca: {self.__marca}, modelo: {self.__modelo}, tipo: {self.__tipo}, color: {self.__color}, tamaño del cuadro: {self.__tamano_cuadro}, tamaño de las ruedas: {self.__tamano_ruedas}, precio: {self.__precio}€"

@@ -42,9 +42,10 @@ class Club:
             list_socios = load(f_socios)
             for dict_usuario, dict_socio in zip(list_usuarios, list_socios):
                 socio = Socio.from_dict(dict_socio)
-                self.__actualizar_descuento_socio(socio)
                 socio.set_usuario(Usuario.from_dict(dict_usuario))
                 self.__lista_socios.append(socio)
+                for socio in self.__lista_socios:
+                    self.__actualizar_descuento_socio(socio)
 
     def __cargar_eventos(self) -> None:
         with open(ARCHIVO_EVENTOS, "r", encoding="UTF-8") as f:
@@ -147,9 +148,10 @@ class Club:
             socio.set_descuento(DESCUENTO_SOLO_HIJOS)
         else:
             dni_hijos = [s.get_familia()["hijos"] for s in self.__lista_socios if "hijos" in s.get_familia()]
-            socios_hijos = [s for s in self.__lista_socios if s .get_usuario().get_dni() in dni_hijos]
-            for socio in socios_hijos:
-                socio.set_descuento(DESCUENTO_SOLO_HIJOS)
+            for dni_hijo in dni_hijos:
+                socios_hijos = [s for s in self.__lista_socios if s.get_usuario().get_dni() in dni_hijo]
+                for socio in socios_hijos:
+                    socio.set_descuento(DESCUENTO_SOLO_HIJOS)
 
     def annadir_socio_familia(self, dni_socio: str, dni_familiar: str, tipo_familiar: str) -> bool:
         socio = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_socio]
@@ -165,4 +167,4 @@ class Club:
             return False
 
     def __repr__(self) -> str:
-        return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"
+        return f"Nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social}"
