@@ -15,14 +15,31 @@ class Vista:
     def error_login(self, login_error) -> None:
         print(login_error)
 
-    def listar_socios(self, lista_socios) -> None:
+    def listar_socios(self, lista_socios: list) -> None:
         print("\n".join([repr(s) for s in lista_socios]))
 
-    def listar_eventos(self, lista_eventos) -> None:
+    def listar_eventos(self, lista_eventos: list) -> None:
         if len(lista_eventos) > 0:
             print("\n".join([repr(ev) for ev in lista_eventos]))
         else:
             print("No hay próximos eventos")
+
+    def listar_bicicletas(self, lista_bicis: list) -> None:
+        if len(lista_bicis) > 0:
+            print("\n".join([repr(b) for b in lista_bicis]))
+        else:
+            print("No hay bicicletas")
+
+    def listar_reparaciones(self, reparaciones: dict) -> None:
+        for bici, lista_reparaciones in reparaciones.items:
+            if len(lista_reparaciones) > 0:
+                print(f"La bicicleta {bici} no tiene reparaciones")
+            else:
+                print(f"Las reparaciones de la bicicleta {bici} son: {'\n'.join([repr(r) for r in lista_reparaciones])}")
+
+    def listar_familia(self, familia: dict) -> None:
+        for tipo, miembros in familia.items():
+            print(f"{tipo}: {miembros}")
 
     def pedir_entero(self, minimo, maximo) -> int:
         valido = False

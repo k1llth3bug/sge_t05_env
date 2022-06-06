@@ -9,6 +9,12 @@ class Bicicleta:
         self.__tamano_cuadro, self.__tamano_ruedas, self.__precio = tamano_cuadro, tamano_ruedas, precio
         self.__lista_reparaciones = [] if lista_reparaciones is None else lista_reparaciones
 
+    def get_marca(self) -> str:
+        return self.__marca
+
+    def get_modelo(self) -> str:
+        return self.__modelo
+
     @classmethod
     def from_dict(cls, dict_bici: dict):
         for datos_bici in dict_bici.values():

@@ -7,6 +7,7 @@ from os.path import exists
 from json import dump, load
 from modelo.Usuario import Usuario
 from modelo.LoginError import LoginError
+from modelo.Bicicleta import Bicicleta
 ARCHIVO_USUARIOS = "usuarios.json"
 ARCHIVO_SOCIOS = "socios.json"
 ARCHIVO_EVENTOS = "eventos.json"
@@ -17,6 +18,7 @@ class Club:
         self.__lista_socios = [] if lista_socios is None else lista_socios
         self.__lista_eventos = [] if lista_eventos is None else lista_eventos
         self.__logged_user = None
+        self.__logged_socio = None
         self.comprobar_archivos()
 
     def get_lista_socios(self) -> List[Socio]:
@@ -82,16 +84,28 @@ class Club:
         return True
 
     def comprobar_usuario(self, dni: str, contrasena: str, es_admin: bool):
-        usuarios = [socio.get_usuario() for socio in self.__lista_socios if socio.get_usuario().get_dni() == dni]
-        if len(usuarios) == 0:
+        socios = [socio for socio in self.__lista_socios if socio.get_usuario().get_dni() == dni]
+        if len(socios) == 0:
             return LoginError.USER_ERROR
-        elif usuarios[0].get_contrasenna() != contrasena:
-            return LoginError.PASSWORD_ERROR
-        elif usuarios[0].is_admin() != es_admin:
-            return LoginError.PERMISSION_ERROR
         else:
-            self.__logged_user = usuarios[0]
-            return LoginError.NO_ERROR
+            usuario = socios[0].get_usuario()
+            if usuario.get_contrasenna() != contrasena:
+                return LoginError.PASSWORD_ERROR
+            elif usuario.is_admin() != es_admin:
+                return LoginError.PERMISSION_ERROR
+            else:
+                self.__logged_user = usuario
+                self.__logged_socio = socios[0]
+                return LoginError.NO_ERROR
+
+    def get_listado_bicicletas(self) -> List[Bicicleta]:
+        return self.__logged_socio.get_lista_bicis()
+
+    def get_listado_reparaciones(self):
+        return self.__logged_socio.get_lista_mantenimientos()
+
+    def get_familia_socio(self):
+        return self.__logged_socio.get_familia()
 
     def __repr__(self) -> str:
         return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"

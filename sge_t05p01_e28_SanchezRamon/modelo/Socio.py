@@ -19,6 +19,15 @@ class Socio:
             return True
         return False
 
+    def get_familia(self) -> dict:
+        return self.__familia
+
+    def get_usuario(self) -> Usuario:
+        return self.__usuario
+
+    def set_usuario(self, usuario) -> None:
+        self.__usuario = usuario
+
     def get_lista_bicis(self) -> List[Bicicleta]:
         return self.__lista_bicicletas
 
@@ -30,17 +39,11 @@ class Socio:
     def dict_socio(self):
         return {self.__usuario.get_dni(): {"nombre": self.__nombre, "direccion": self.__direccion, "telefono": self.__telefono, "email": self.__email, "lista_bicicletas": [b.dict_bicicleta() for b in self.__lista_bicicletas], "familia": self.__familia}}
 
-    def get_lista_mantinimientos(self) -> List[Reparacion]:
-        res = []
+    def get_lista_mantenimientos(self) -> dict:
+        res = {}
         for bici in self.__lista_bicicletas:
-            res.append(x for x in bici.get_lista_reparaciones())
+            res[f"{bici.get_marca()} {bici.get_modelo()}"] = [x for x in bici.get_lista_reparaciones()]
         return res
-
-    def get_usuario(self) -> Usuario:
-        return self.__usuario
-
-    def set_usuario(self, usuario) -> None:
-        self.__usuario = usuario
 
     def __repr__(self) -> str:
         return f"Socio(usuario: {self.__usuario}, nombre: {self.__nombre}, dirección: {self.__direccion}, teléfono: {self.__telefono}, email: {self.__email})"

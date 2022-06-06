@@ -52,11 +52,9 @@ class Controlador:
                 #TODO: Inscribir socio
                 pass
             case 3:
-                #TODO: Listar bicicletas
-                pass
+                self.__vista.listar_bicicletas(self.__club.get_listado_bicicletas())
             case 4:
-                #TODO: Listar reparaciones
-                pass
+                self.__vista.listar_reparaciones(self.__club.get_listado_reparaciones()) 
             case 5:
                 #TODO: Añadir bici
                 pass
@@ -64,8 +62,7 @@ class Controlador:
                 #TODO: Añadir reparacion
                 pass
             case 7:
-                #TODO: Ver familia
-                pass
+                self.__vista.listar_familia(self.__club.get_familia_socio())
             case 8:
                 #TODO: Ver historico
                 pass
