@@ -24,6 +24,12 @@ class Vista:
         else:
             print("No hay próximos eventos")
 
+    def listar_eventos_socio_inscrito(self, lista_eventos_socio_inscrito: list) -> None:
+        if len(lista_eventos_socio_inscrito) > 0:
+            print("\n".join([f"Socios inscritos en {ev}: {'\n'.join([repr(s) for s in ev.get_socios_inscritos()])}" for ev in lista_eventos_socio_inscrito]))
+        else:
+            print("No hay próximos eventos")
+
     def listar_bicicletas(self, lista_bicis: list) -> None:
         if len(lista_bicis) > 0:
             print("\n".join([repr(b) for b in lista_bicis]))

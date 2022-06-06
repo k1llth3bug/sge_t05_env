@@ -47,7 +47,7 @@ class Controlador:
             case 0:
                 self.__club.guardar_datos()
             case 1:
-                self.__vista.listar_eventos(self.__club.get_proximos_eventos_socio(self.__id_usuario))
+                self.__vista.listar_eventos_socio_inscrito(self.__club.get_proximos_eventos_socio(self.__id_usuario))
             case 2:
                 #TODO: Inscribir socio
                 pass
