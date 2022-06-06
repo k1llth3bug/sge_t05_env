@@ -48,11 +48,64 @@ class Vista:
                 print("\n".join([repr(r) for r in lista_reparaciones]))
 
     def listar_familia(self, familia: dict) -> None:
-        for tipo, miembros in familia.items():
-            print(f"{tipo}: {miembros}")
+        for tipo, socios in familia.items():
+            print(f"{tipo}: {socios}")
 
     def pedir_num_evento(self, lista_eventos) -> int:
         return self.pedir_entero(1, len(lista_eventos))
+
+    def validar_respuesta(self, res: str, respuestas: list) -> bool:
+        return res.casefold() in [r.casefold() for r in respuestas]
+
+    def pedir_datos_socio(self) -> dict:
+        datos_socio = {}
+        print("Dime el DNI del nuevo socio:")
+        datos_socio["dni"] = input()
+        while len(datos_socio["dni"]) == 0:
+            print("El DNI no puede estar vacío")
+            datos_socio["dni"] = input()
+        print("Dime su contraseña:")
+        datos_socio["contrasena"] = input()
+        while len(datos_socio["contrasena"]) == 0:
+            print("La contraseña no puede estar vacía")
+            datos_socio["contrasena"] = input()
+        print("Dime si es admin o no (s o n):")
+        respuesta_admin = input()
+        while not self.validar_respuesta(respuesta_admin, ["s", "n"]):
+            print("Dime sólo s o n")
+            respuesta_admin = input()
+        datos_socio["es_admin"] = respuesta_admin.casefold() == "y"
+        print("Dime su nombre:")
+        datos_socio["nombre"] = input()
+        while len(datos_socio["nombre"]) == 0:
+            print("El nombre no puede estar vacío")
+            datos_socio["nombre"] = input()
+        print("Dime su dirección:")
+        datos_socio["direccion"] = input()
+        print("Dime su teléfono:")
+        datos_socio["telefono"] = self.pedir_entero(600000000, 700000000)
+        print("Dime su email:")
+        datos_socio["email"] = input()
+        return datos_socio
+
+    def operacion_realizada(self, dato: bool) -> None:
+        print("Operación realizada correctamente" if dato else "No se ha podido realizar la operación")
+
+    def pedir_dni_socio(self) -> str:
+        print("Dime el DNI del socio a actualizar:")
+        return input()
+
+    def pedir_dni_familiar(self) -> str:
+        print("Dime el DNI del familiar:")
+        return input()
+
+    def pedir_tipo_familiar(self) -> str:
+        print("Dime el tipo de familiar (hijo o pareja):")
+        res = input()
+        while not self.validar_respuesta(res, ["pareja", "hijo"]):
+            print("No es válido, sólo pareja o hijo")
+            res = input()
+        return res
 
     def pedir_entero(self, minimo, maximo) -> int:
         valido = False
@@ -84,7 +137,7 @@ class Vista:
     def mostrar_opciones_socio(self) -> None:
         opcion = -1
         lista_opciones = ["1. Ver mis próximos eventos y lista de inscritos.","2. Inscribirme a evento.",
-        "3. Ver mis bicicletas .","4. Ver mis reparaciones.", "5. Añadir nueva bicicleta.",
+        "3. Ver mis bicicletas.","4. Ver mis reparaciones.", "5. Añadir nueva bicicleta.",
         "6. Añadir reparación a bicicleta.", "7. Ver mi familia.", "8. Ver mi histórico.",
         "0. Salir"]
         while opcion != 0:

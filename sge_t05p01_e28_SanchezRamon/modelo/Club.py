@@ -11,7 +11,9 @@ from modelo.Bicicleta import Bicicleta
 ARCHIVO_USUARIOS = "usuarios.json"
 ARCHIVO_SOCIOS = "socios.json"
 ARCHIVO_EVENTOS = "eventos.json"
-
+DESCUENTO_HIJOS_PAREJA = 0.3
+DESCUENTO_SOLO_HIJOS = 0.15
+DESCUENTO_SOLO_PAREJA = 0.1
 class Club:
     def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = None, lista_eventos: List[Evento] = None) -> None:
         self.__nombre, self.__cif, self.__sede_social = nombre, cif, sede_social 
@@ -40,6 +42,7 @@ class Club:
             list_socios = load(f_socios)
             for dict_usuario, dict_socio in zip(list_usuarios, list_socios):
                 socio = Socio.from_dict(dict_socio)
+                self.__actualizar_descuento_socio(socio)
                 socio.set_usuario(Usuario.from_dict(dict_usuario))
                 self.__lista_socios.append(socio)
 
@@ -111,11 +114,55 @@ class Club:
     def get_listado_reparaciones(self):
         return self.__logged_socio.get_lista_mantenimientos()
 
-    def get_familia_socio(self):
-        return self.__logged_socio.get_familia()
+    def get_familia_socio(self) -> dict:
+        familia = {}
+        familia_socio = self.__logged_socio.get_familia()
+        if "pareja" in familia_socio:
+            dni_pareja = [dni for dni in familia_socio["pareja"] if dni != self.__logged_user.get_dni()][0]
+            familia["pareja"] = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_pareja]
+        if "hijos" in familia_socio:
+            familia["hijos"] = [s for s in self.__lista_socios if s.get_usuario().get_dni() in familia_socio["hijos"]]
+        return familia
 
     def inscribir_socio_evento(self, num_evento: int):
         self.get_proximos_eventos()[num_evento].inscribir_socio(self.__logged_socio)
+
+    def annadir_socio(self, datos_socio: dict) -> bool:
+        coincidencias_dni = [s for s in self.__lista_socios if s.get_usuario().get_dni() == datos_socio["dni"]]
+        if len(coincidencias_dni) == 0:
+            usuario = Usuario(datos_socio["dni"], datos_socio["contrasena"], es_admin=datos_socio["es_admin"])
+            socio = Socio(usuario, datos_socio["nombre"], datos_socio["direccion"], datos_socio["telefono"], datos_socio["email"])
+            self.__lista_socios.append(socio)
+            return True
+        else:
+            return False
+
+    def __actualizar_descuento_socio(self, socio: Socio) -> None:
+        familia_socio = socio.get_familia()
+        if "hijos" in familia_socio and "pareja" in familia_socio:
+            socio.set_descuento(DESCUENTO_HIJOS_PAREJA)
+        elif "pareja" in familia_socio:
+            socio.set_descuento(DESCUENTO_SOLO_PAREJA)
+        elif "hijos" in familia_socio:
+            socio.set_descuento(DESCUENTO_SOLO_HIJOS)
+        else:
+            dni_hijos = [s.get_familia()["hijos"] for s in self.__lista_socios if "hijos" in s.get_familia()]
+            socios_hijos = [s for s in self.__lista_socios if s .get_usuario().get_dni() in dni_hijos]
+            for socio in socios_hijos:
+                socio.set_descuento(DESCUENTO_SOLO_HIJOS)
+
+    def annadir_socio_familia(self, dni_socio: str, dni_familiar: str, tipo_familiar: str) -> bool:
+        socio = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_socio]
+        familiar = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_familiar]
+        if len(socio) != 0 and len(familiar) != 0:
+            if socio[0].annadir_miembro_familia(dni_familiar, tipo_familiar):
+                if tipo_familiar == "pareja":
+                    familiar[0].annadir_miembro_familia(dni_socio, tipo_familiar)
+                self.__actualizar_descuento_socio(socio[0])
+                self.__actualizar_descuento_socio(familiar[0])
+            return True
+        else:
+            return False
 
     def __repr__(self) -> str:
         return f"Club(nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social})"

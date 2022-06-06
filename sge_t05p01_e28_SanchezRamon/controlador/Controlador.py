@@ -20,15 +20,16 @@ class Controlador:
             case 1:
                 self.__vista.listar_socios(self.__club.get_lista_socios())
             case 2: 
-                #TODO: Insertar socio
-                pass
+                self.__vista.operacion_realizada(self.__club.annadir_socio(self.__vista.pedir_datos_socio()))
             case 3:
-                #TODO: Añadir socio a familia
-                pass
+                dni_socio = self.__vista.pedir_dni_socio()
+                dni_familiar = self.__vista.pedir_dni_familiar()
+                tipo_familiar = self.__vista.pedir_tipo_familiar()
+                self.__vista.operacion_realizada(self.__club.annadir_socio_familia(dni_socio, dni_familiar, tipo_familiar))
             case 4:
                 self.__vista.listar_eventos(self.__club.get_proximos_eventos())
             case 5:
-                #TODO: Buscar eventos por fecha
+                #TODO: Buscar eventos por fecha exacta
                 pass
             case 6:
                 #TODO: Insertar evento
@@ -52,7 +53,7 @@ class Controlador:
             case 2:
                 eventos_abiertos = self.__club.get_proximos_eventos()
                 self.__vista.listar_eventos(eventos_abiertos)
-                self.__club.inscribir_socio_evento(self.__vista.pedir_num_evento(eventos_abiertos))
+                self.__club.inscribir_socio_evento(self.__vista.pedir_num_evento(eventos_abiertos)-1)
             case 3:
                 self.__vista.listar_bicicletas(self.__club.get_listado_bicicletas())
             case 4:

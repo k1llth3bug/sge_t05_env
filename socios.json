@@ -3,7 +3,50 @@
         "11111111A": {
             "nombre": "admin",
             "direccion": "",
-            "telefono": 6666666666,
+            "telefono": 666666666,
+            "email": "",
+            "lista_bicicletas": [],
+            "familia": {}
+        }
+    },
+    {
+        "22222222B": {
+            "nombre": "Jose",
+            "direccion": "Quijote 56",
+            "telefono": 678215221,
+            "email": "",
+            "lista_bicicletas": [],
+            "familia": {
+                "pareja": [
+                    "22222222B",
+                    "33333333C"
+                ],
+                "hijos": [
+                    "44444444D"
+                ]
+            }
+        }
+    },
+    {
+        "33333333C": {
+            "nombre": "Marta",
+            "direccion": "Quijote 56",
+            "telefono": 693265284,
+            "email": "",
+            "lista_bicicletas": [],
+            "familia": {
+                "pareja": [
+                    "22222222B",
+                    "33333333C"
+                ]
+            }
+        }
+    },
+    {
+        "44444444D": {
+            "nombre": "Jose",
+            "direccion": "Quijote 56",
+            "telefono": 687193923,
             "email": "",
             "lista_bicicletas": [],
             "familia": {}
