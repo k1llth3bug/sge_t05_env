@@ -1,7 +1,6 @@
 from typing import List
 from modelo.Usuario import Usuario
 from modelo.Bicicleta import Bicicleta
-from modelo.Reparacion import Reparacion
 
 class Socio:
     def __init__(self, usuario: Usuario, nombre: str = "", direccion: str = "", telefono: int = 6666666666, email: str = "", lista_bicicletas: List[Bicicleta] = None, familia: dict = None) -> None:
@@ -43,7 +42,7 @@ class Socio:
     def get_lista_mantenimientos(self) -> dict:
         res = {}
         for bici in self.__lista_bicicletas:
-            res[f"{bici.get_marca()} {bici.get_modelo()}"] = [x for x in bici.get_lista_reparaciones()]
+            res[f"{bici.get_marca()} {bici.get_modelo()}"] = [r for r in bici.get_lista_reparaciones()]
         return res
 
     def __repr__(self) -> str:
