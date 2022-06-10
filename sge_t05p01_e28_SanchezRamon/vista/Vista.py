@@ -127,7 +127,7 @@ class Vista:
         es_valida = False
         while not es_valida:
             print("Dime el año:")
-            anno = self.pedir_entero(1, date.today().year)
+            anno = self.pedir_entero(1, 2100)
             print("Dime el mes:")
             mes = self.pedir_entero(1, 12)
             print("Dime el día:")
