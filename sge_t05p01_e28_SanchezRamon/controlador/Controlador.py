@@ -53,7 +53,7 @@ class Controlador:
             case 2:
                 eventos_abiertos = self.__club.get_proximos_eventos()
                 self.__vista.listar_eventos(eventos_abiertos)
-                self.__club.inscribir_socio_evento(self.__vista.pedir_num_evento(eventos_abiertos)-1)
+                self.__vista.operacion_realizada(self.__club.inscribir_socio_evento(self.__vista.pedir_num_evento(eventos_abiertos)-1))
             case 3:
                 self.__vista.listar_bicicletas(self.__club.get_listado_bicicletas())
             case 4:

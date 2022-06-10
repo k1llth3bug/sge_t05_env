@@ -125,7 +125,7 @@ class Club:
             familia["hijos"] = [s for s in self.__lista_socios if s.get_usuario().get_dni() in familia_socio["hijos"]]
         return familia
 
-    def inscribir_socio_evento(self, num_evento: int):
+    def inscribir_socio_evento(self, num_evento: int) -> bool:
         self.get_proximos_eventos()[num_evento].inscribir_socio(self.__logged_socio)
 
     def annadir_socio(self, datos_socio: dict) -> bool:
