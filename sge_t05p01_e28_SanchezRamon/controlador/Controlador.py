@@ -29,8 +29,8 @@ class Controlador:
             case 4:
                 self.__vista.listar_eventos(self.__club.get_proximos_eventos())
             case 5:
-                #TODO: Buscar eventos por fecha exacta
-                pass
+                fecha = self.__vista.pedir_fecha()
+                self.__vista.listar_eventos(self.__club.eventos_fecha_exacta(fecha))
             case 6:
                 #TODO: Insertar evento
                 pass

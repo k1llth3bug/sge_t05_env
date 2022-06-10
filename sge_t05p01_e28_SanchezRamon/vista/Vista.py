@@ -1,3 +1,4 @@
+from datetime import date
 class Vista:
     def __init__(self, controlador) -> None:
         self.__controlador = controlador
@@ -107,7 +108,7 @@ class Vista:
             res = input()
         return res
 
-    def pedir_entero(self, minimo, maximo) -> int:
+    def pedir_entero(self, minimo: int, maximo: int) -> int:
         valido = False
         res = 0
         while not valido:
@@ -119,6 +120,23 @@ class Vista:
                     print(f"No está entre {minimo} y {maximo}, pruebe de nuevo")
             except ValueError:
                 print("No es un número, pruebe de nuevo")
+        return res
+
+    def pedir_fecha(self) -> date:
+        res = None
+        es_valida = False
+        while not es_valida:
+            print("Dime el año:")
+            anno = self.pedir_entero(1, date.today().year)
+            print("Dime el mes:")
+            mes = self.pedir_entero(1, 12)
+            print("Dime el día:")
+            dia = self.pedir_entero(1, 31)
+            try:
+                res = date(anno, mes, dia)
+                es_valida = True
+            except ValueError:
+                print("No es una fecha válida, pruebe de nuevo")
         return res
 
     def mostrar_opciones_admin(self) -> None:

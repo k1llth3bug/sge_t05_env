@@ -166,5 +166,8 @@ class Club:
         else:
             return False
 
+    def eventos_fecha_exacta(self, fecha: date) -> List[Evento]:
+        return [ev for ev in self.__lista_eventos if ev.get_fecha() == fecha]
+
     def __repr__(self) -> str:
         return f"Nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social}"
