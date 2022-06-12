@@ -60,8 +60,7 @@ class Controlador:
             case 4:
                 self.__vista.listar_reparaciones(self.__club.get_listado_reparaciones()) 
             case 5:
-                #TODO: Añadir bici
-                pass
+                self.__club.add_bicicleta(self.__vista.pedir_datos_bici())
             case 6:
                 #TODO: Añadir reparacion
                 pass

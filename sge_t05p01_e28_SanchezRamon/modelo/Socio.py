@@ -42,6 +42,9 @@ class Socio:
     def get_lista_bicis(self) -> List[Bicicleta]:
         return self.__lista_bicicletas
 
+    def add_bici(self, bici: Bicicleta) -> None:
+        self.__lista_bicicletas.append(bici)
+
     @classmethod
     def from_dict(cls, dict_socio: dict):
         for datos in dict_socio.values():

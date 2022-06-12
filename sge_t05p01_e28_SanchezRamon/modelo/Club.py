@@ -112,6 +112,12 @@ class Club:
     def get_listado_bicicletas(self) -> List[Bicicleta]:
         return self.__logged_socio.get_lista_bicis()
 
+    def add_bicicleta(self, datos_bici: dict) -> None:
+        bici = Bicicleta(datos_bici["fecha_compra"], datos_bici["marca"], datos_bici["modelo"],
+        datos_bici["tipo"], datos_bici["color"], datos_bici["tamano_cuadro"], datos_bici["tamano_ruedas"],
+        datos_bici["precio"])
+        self.__logged_socio.add_bici(bici)
+
     def get_listado_reparaciones(self):
         return self.__logged_socio.get_lista_mantenimientos()
 

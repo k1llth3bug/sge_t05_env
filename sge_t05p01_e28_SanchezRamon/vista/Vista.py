@@ -122,6 +122,17 @@ class Vista:
                 print("No es un número, pruebe de nuevo")
         return res
 
+    def pedir_decimal(self) -> float:
+        valido = False
+        res = 0
+        while not valido:
+            try:
+                res = float(input())
+                valido = True
+            except ValueError:
+                print("No es un número, pruebe de nuevo")
+        return res
+
     def pedir_fecha(self) -> date:
         res = None
         es_valida = False
@@ -138,6 +149,44 @@ class Vista:
             except ValueError:
                 print("No es una fecha válida, pruebe de nuevo")
         return res
+
+    def pedir_datos_bici(self) -> dict:
+        datos_bici = {}
+        datos_bici["fecha_compra"] = self.pedir_fecha()
+        print("Dime la marca de la bici")
+        marca = input()
+        while len(marca) == 0:
+            print("No puede estar vacía la marca, pruebe de nuevo")
+            marca = input()
+        datos_bici["marca"] = marca
+        print("Dime el modelo de la bici")
+        modelo = input()
+        while len(modelo) == 0:
+            print("No puede estar vacío el modelo, pruebe de nuevo")
+            modelo = input()
+        datos_bici["modelo"] = modelo
+        print("Dime el tipo de la bici")
+        tipo = input()
+        while len(tipo) == 0:
+            print("No puede estar vacío el tipo, pruebe de nuevo")
+            tipo = input()
+        datos_bici["tipo"] = tipo
+        print("Dime el color de la bici")
+        color = input()
+        while len(color) == 0:
+            print("No puede estar vacío el color, pruebe de nuevo")
+            color = input()
+        datos_bici["color"] = color
+        print("Dime el tamaño del cuadro")
+        tamano_cuadro = self.pedir_decimal()
+        datos_bici["tamano_cuadro"] = tamano_cuadro
+        print("Dime el tamaño de las ruedas")
+        tamano_ruedas = self.pedir_decimal()
+        datos_bici["tamano_ruedas"] = tamano_ruedas
+        print("Dime el precio")
+        precio = self.pedir_decimal()
+        datos_bici["precio"] = precio
+        return datos_bici
 
     def mostrar_opciones_admin(self) -> None:
         opcion = -1
