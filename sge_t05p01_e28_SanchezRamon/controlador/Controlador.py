@@ -62,8 +62,8 @@ class Controlador:
             case 5:
                 self.__club.add_bicicleta(self.__vista.pedir_datos_bici())
             case 6:
-                #TODO: Añadir reparacion
-                pass
+                num_bici = self.__vista.pedir_num_bicicleta(self.__club.get_listado_bicicletas())
+                self.__club.add_reparacion(num_bici-1, self.__vista.pedir_datos_reparacion())
             case 7:
                 self.__vista.listar_familia(self.__club.get_familia_socio())
             case 8:

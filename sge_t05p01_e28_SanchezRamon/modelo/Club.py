@@ -8,6 +8,8 @@ from json import dump, load
 from modelo.Usuario import Usuario
 from modelo.LoginError import LoginError
 from modelo.Bicicleta import Bicicleta
+from modelo.Reparacion import Reparacion
+from modelo.Categoria import Categoria
 ARCHIVO_USUARIOS = "usuarios.json"
 ARCHIVO_SOCIOS = "socios.json"
 ARCHIVO_EVENTOS = "eventos.json"
@@ -174,6 +176,10 @@ class Club:
 
     def eventos_fecha_exacta(self, fecha: date) -> List[Evento]:
         return [ev for ev in self.__lista_eventos if ev.get_fecha() == fecha]
+
+    def add_reparacion(self, num_bici: int, datos_reparacion: dict) -> None:
+        reparacion = Reparacion(datos_reparacion["fecha"], datos_reparacion["coste"], datos_reparacion["descripcion"], Categoria(datos_reparacion["num_categoria"]))
+        self.get_listado_bicicletas()[num_bici].add_reparacion(reparacion)
 
     def __repr__(self) -> str:
         return f"Nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social}"

@@ -188,6 +188,31 @@ class Vista:
         datos_bici["precio"] = precio
         return datos_bici
 
+    def pedir_datos_reparacion(self) -> dict:
+        datos_reparacion = {}
+        print("Dime la fecha de la rpearación")
+        fecha = self.pedir_fecha()
+        datos_reparacion["fecha"] = fecha
+        print("Dime el coste")
+        coste = self.pedir_decimal()
+        datos_reparacion["coste"] = coste
+        print("Dime la descripción")
+        descripcion = input()
+        datos_reparacion["descripcion"] = descripcion
+        print("Dime un número de categoría")
+        print("\n".join(["1. Ruedas", "2. Frenos", "3. Asiento", "4. Cuadro", "5. Delantera", "6. Trasera", "0. Otros"]))
+        num_categoria = self.pedir_entero(0, 6)
+        datos_reparacion["num_categoria"] = num_categoria
+        return datos_reparacion
+
+    def pedir_num_bicicleta(self, lista_bicis) -> int:
+        num = 1
+        for bici in lista_bicis:
+            print(f"{num}. {bici}")
+            num +=1
+        print("Dime la bicicleta")
+        return self.pedir_entero(1, len(lista_bicis))
+
     def mostrar_opciones_admin(self) -> None:
         opcion = -1
         lista_opciones = ["1. Ver listado completo de socios.","2. Insertar un nuevo socio.",
