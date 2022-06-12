@@ -16,47 +16,59 @@ class Vista:
     def error_login(self, login_error) -> None:
         print(login_error)
 
-    def listar_socios(self, lista_socios: list) -> None:
-        print("\n\n".join([repr(s) for s in lista_socios]))
+    def pedir_entero(self, minimo: int, maximo: int) -> int:
+        valido = False
+        res = 0
+        while not valido:
+            try:
+                res = int(input())
+                if minimo <= res <= maximo:
+                    valido = True
+                else:
+                    print(f"No está entre {minimo} y {maximo}, pruebe de nuevo")
+            except ValueError:
+                print("No es un número, pruebe de nuevo")
+        return res
 
-    def listar_eventos(self, lista_eventos: list) -> None:
-        if len(lista_eventos) > 0:
-            print("\n".join([repr(ev) for ev in lista_eventos]))
-        else:
-            print("No hay próximos eventos")
+    def pedir_decimal_positivo(self) -> float:
+        valido = False
+        res = 0
+        while not valido:
+            try:
+                res = float(input())
+                if res <= 0:
+                    print("No es un número válido, pruebe de nuevo")
+                else:
+                    valido = True
+            except ValueError:
+                print("No es un número, pruebe de nuevo")
+        return res
 
-    def listar_eventos_socio_inscrito(self, lista_eventos_socio_inscrito: list) -> None:
-        if len(lista_eventos_socio_inscrito) > 0:
-            for ev in lista_eventos_socio_inscrito:
-                print(f"Socios inscritos en {ev}:")
-                for socio in ev.get_socios_inscritos():
-                    print(socio)
-        else:
-            print("No hay próximos eventos")
-
-    def listar_bicicletas(self, lista_bicis: list) -> None:
-        if len(lista_bicis) > 0:
-            print("\n".join([repr(b) for b in lista_bicis]))
-        else:
-            print("No hay bicicletas")
-
-    def listar_reparaciones(self, reparaciones: dict) -> None:
-        for bici, lista_reparaciones in reparaciones.items:
-            if len(lista_reparaciones) > 0:
-                print(f"La bicicleta {bici} no tiene reparaciones")
-            else:
-                print(f"Las reparaciones de la bicicleta {bici} son:")
-                print("\n".join([repr(r) for r in lista_reparaciones]))
-
-    def listar_familia(self, familia: dict) -> None:
-        for tipo, socios in familia.items():
-            print(f"{tipo}: {socios}")
-
-    def pedir_num_evento(self, lista_eventos) -> int:
-        return self.pedir_entero(1, len(lista_eventos))
+    def pedir_fecha(self) -> date:
+        res = None
+        es_valida = False
+        while not es_valida:
+            print("Dime el año:")
+            anno = self.pedir_entero(1, 2100)
+            print("Dime el mes:")
+            mes = self.pedir_entero(1, 12)
+            print("Dime el día:")
+            dia = self.pedir_entero(1, 31)
+            try:
+                res = date(anno, mes, dia)
+                es_valida = True
+            except ValueError:
+                print("No es una fecha válida, pruebe de nuevo")
+        return res
 
     def validar_respuesta(self, res: str, respuestas: list) -> bool:
         return res.casefold() in [r.casefold() for r in respuestas]
+
+    def operacion_realizada(self, dato: bool) -> None:
+        print("Operación realizada correctamente" if dato else "No se ha podido realizar la operación")
+
+    def listar_socios(self, lista_socios: list) -> None:
+        print("\n\n".join([repr(s) for s in lista_socios]))
 
     def pedir_datos_socio(self) -> dict:
         datos_socio = {}
@@ -89,9 +101,6 @@ class Vista:
         datos_socio["email"] = input()
         return datos_socio
 
-    def operacion_realizada(self, dato: bool) -> None:
-        print("Operación realizada correctamente" if dato else "No se ha podido realizar la operación")
-
     def pedir_dni_socio(self) -> str:
         print("Dime el DNI del socio a actualizar:")
         return input()
@@ -108,47 +117,70 @@ class Vista:
             res = input()
         return res
 
-    def pedir_entero(self, minimo: int, maximo: int) -> int:
-        valido = False
-        res = 0
-        while not valido:
-            try:
-                res = int(input())
-                if minimo <= res <= maximo:
-                    valido = True
-                else:
-                    print(f"No está entre {minimo} y {maximo}, pruebe de nuevo")
-            except ValueError:
-                print("No es un número, pruebe de nuevo")
-        return res
+    def listar_eventos(self, lista_eventos: list) -> None:
+        if len(lista_eventos) > 0:
+            print("\n".join([repr(ev) for ev in lista_eventos]))
+        else:
+            print("No hay próximos eventos")
 
-    def pedir_decimal(self) -> float:
-        valido = False
-        res = 0
-        while not valido:
-            try:
-                res = float(input())
-                valido = True
-            except ValueError:
-                print("No es un número, pruebe de nuevo")
-        return res
+    def pedir_datos_evento(self) -> dict:
+        datos_evento = {}
+        print("Dime la fecha del evento:")
+        datos_evento["fecha"] = self.pedir_fecha()
+        print("Dime la fecha de inscripción del evento:")
+        datos_evento["fecha_inscripcion"] = self.pedir_fecha()
+        print("Dime la localidad:")
+        localidad = input()
+        while len(localidad) == 0:
+            print("Localidad no puede estar vacía, prueba de nuevo")
+            localidad = input()
+        datos_evento["localidad"] = localidad
+        print("Dime la provincia:")
+        provincia = input()
+        while len(provincia) == 0:
+            print("Provincia no puede estar vacía, prueba de nuevo")
+            provincia = input()
+        datos_evento["provincia"] = provincia
+        print("Dime el organizador:")
+        organizador = input()
+        while len(organizador) == 0:
+            print("Organizador no puede estar vacío, prueba de nuevo")
+            organizador = input()
+        datos_evento["organizador"] = organizador
+        print("Dime los kilómetros totales:")
+        km_totales = self.pedir_decimal_positivo()
+        datos_evento["km_totales"] = km_totales
+        print("Dime el precio:")
+        precio = self.pedir_decimal_positivo()
+        datos_evento["precio"] = precio
+        return datos_evento
 
-    def pedir_fecha(self) -> date:
-        res = None
-        es_valida = False
-        while not es_valida:
-            print("Dime el año:")
-            anno = self.pedir_entero(1, 2100)
-            print("Dime el mes:")
-            mes = self.pedir_entero(1, 12)
-            print("Dime el día:")
-            dia = self.pedir_entero(1, 31)
-            try:
-                res = date(anno, mes, dia)
-                es_valida = True
-            except ValueError:
-                print("No es una fecha válida, pruebe de nuevo")
-        return res
+    def listar_eventos_socio_inscrito(self, lista_eventos_socio_inscrito: list) -> None:
+        if len(lista_eventos_socio_inscrito) > 0:
+            for ev in lista_eventos_socio_inscrito:
+                print(f"Socios inscritos en {ev}:")
+                for socio in ev.get_socios_inscritos():
+                    print(socio)
+        else:
+            print("No hay próximos eventos")
+
+    def pedir_num_evento(self, lista_eventos) -> int:
+        print("Dime un número de evento")
+        return self.pedir_entero(1, len(lista_eventos))
+
+    def listar_bicicletas(self, lista_bicis: list) -> None:
+        if len(lista_bicis) > 0:
+            print("\n".join([repr(b) for b in lista_bicis]))
+        else:
+            print("No hay bicicletas")
+
+    def listar_reparaciones(self, reparaciones: dict) -> None:
+        for bici, lista_reparaciones in reparaciones.items:
+            if len(lista_reparaciones) > 0:
+                print(f"La bicicleta {bici} no tiene reparaciones")
+            else:
+                print(f"Las reparaciones de la bicicleta {bici} son:")
+                print("\n".join([repr(r) for r in lista_reparaciones]))
 
     def pedir_datos_bici(self) -> dict:
         datos_bici = {}
@@ -178,28 +210,32 @@ class Vista:
             color = input()
         datos_bici["color"] = color
         print("Dime el tamaño del cuadro")
-        tamano_cuadro = self.pedir_decimal()
+        tamano_cuadro = self.pedir_decimal_positivo()
         datos_bici["tamano_cuadro"] = tamano_cuadro
         print("Dime el tamaño de las ruedas")
-        tamano_ruedas = self.pedir_decimal()
+        tamano_ruedas = self.pedir_decimal_positivo()
         datos_bici["tamano_ruedas"] = tamano_ruedas
         print("Dime el precio")
-        precio = self.pedir_decimal()
+        precio = self.pedir_decimal_positivo()
         datos_bici["precio"] = precio
         return datos_bici
 
+    def listar_familia(self, familia: dict) -> None:
+        for tipo, socios in familia.items():
+            print(f"{tipo}: {socios}")
+
     def pedir_datos_reparacion(self) -> dict:
         datos_reparacion = {}
-        print("Dime la fecha de la rpearación")
+        print("Dime la fecha de la reparación:")
         fecha = self.pedir_fecha()
         datos_reparacion["fecha"] = fecha
-        print("Dime el coste")
-        coste = self.pedir_decimal()
+        print("Dime el coste:")
+        coste = self.pedir_decimal_positivo()
         datos_reparacion["coste"] = coste
-        print("Dime la descripción")
+        print("Dime la descripción:")
         descripcion = input()
         datos_reparacion["descripcion"] = descripcion
-        print("Dime un número de categoría")
+        print("Dime un número de categoría:")
         print("\n".join(["1. Ruedas", "2. Frenos", "3. Asiento", "4. Cuadro", "5. Delantera", "6. Trasera", "0. Otros"]))
         num_categoria = self.pedir_entero(0, 6)
         datos_reparacion["num_categoria"] = num_categoria
@@ -210,7 +246,7 @@ class Vista:
         for bici in lista_bicis:
             print(f"{num}. {bici}")
             num +=1
-        print("Dime la bicicleta")
+        print("Dime el número de la bicicleta:")
         return self.pedir_entero(1, len(lista_bicis))
 
     def mostrar_opciones_admin(self) -> None:

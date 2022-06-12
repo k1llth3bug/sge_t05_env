@@ -32,8 +32,7 @@ class Controlador:
                 fecha = self.__vista.pedir_fecha()
                 self.__vista.listar_eventos(self.__club.eventos_fecha_exacta(fecha))
             case 6:
-                #TODO: Insertar evento
-                pass
+                self.__vista.operacion_realizada(self.__club.add_evento(self.__vista.pedir_datos_evento()))
             case 7:
                 #TODO: Ver control cuotas anual
                 pass

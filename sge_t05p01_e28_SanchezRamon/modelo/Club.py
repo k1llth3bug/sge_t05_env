@@ -181,5 +181,14 @@ class Club:
         reparacion = Reparacion(datos_reparacion["fecha"], datos_reparacion["coste"], datos_reparacion["descripcion"], Categoria(datos_reparacion["num_categoria"]))
         self.get_listado_bicicletas()[num_bici].add_reparacion(reparacion)
 
+    def add_evento(self, datos_evento: dict) -> bool:
+        evento = Evento(datos_evento["fecha"], datos_evento["fecha_inscripcion"], datos_evento["localidad"], datos_evento["provincia"],
+        datos_evento["organizador"], datos_evento["km_totales"], datos_evento["precio"])
+        for ev in self.__lista_eventos:
+            if not ev.es_valido(evento):
+                return False
+        self.__lista_eventos.append(evento)
+        return True
+
     def __repr__(self) -> str:
         return f"Nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social}"
