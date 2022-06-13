@@ -13,6 +13,7 @@ from modelo.Categoria import Categoria
 ARCHIVO_USUARIOS = "usuarios.json"
 ARCHIVO_SOCIOS = "socios.json"
 ARCHIVO_EVENTOS = "eventos.json"
+ARCHIVO_CUOTAS = "cuotas.json"
 class Club:
     def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = None, lista_eventos: List[Evento] = None, control_cuotas: dict = None) -> None:
         self.__nombre, self.__cif, self.__sede_social = nombre, cif, sede_social 
@@ -33,6 +34,7 @@ class Club:
         if exists(ARCHIVO_USUARIOS) and exists(ARCHIVO_SOCIOS) and exists(ARCHIVO_EVENTOS):
             self.__cargar_usuarios_socios()
             self.__cargar_eventos()
+            self.__cargar_cuotas()
         else:
             self.__lista_socios.append(Socio(Usuario("11111111A", "admin", es_admin=True), "admin"))
 
@@ -59,9 +61,14 @@ class Club:
                 ev.set_socios_inscritos(lista_socios)
                 self.__lista_eventos.append(ev)
 
+    def __cargar_cuotas(self) -> None:
+        with open(ARCHIVO_CUOTAS, "r", encoding="UTF-8") as f:
+            self.__control_cuotas = load(f)
+
     def guardar_datos(self) -> None:
         self.__guardar_socios_usuarios()
         self.__guardar_eventos()
+        self.__guardar_cuotas()
 
     def __guardar_socios_usuarios(self) -> None:
         lista_usuarios = [socio.get_usuario().dict_user() for socio in self.__lista_socios]
@@ -73,6 +80,10 @@ class Club:
     def __guardar_eventos(self) -> None:
         with open(ARCHIVO_EVENTOS, "w", encoding="UTF-8") as f:
             dump([ev.to_dict() for ev in self.__lista_eventos], f, indent=4)
+
+    def __guardar_cuotas(self) -> None:
+        with open(ARCHIVO_CUOTAS, "w", encoding="UTF-8") as f:
+            dump(self.__control_cuotas, f, indent=4)
 
     def get_proximos_eventos_socio(self, dni_socio) -> List[Evento]:
         return [ev for ev in self.__lista_eventos if es_posterior_o_igual(ev.get_fecha(), date.today()) and ev.check_inscrito(dni_socio)]
