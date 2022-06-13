@@ -34,13 +34,14 @@ class Controlador:
             case 6:
                 self.__vista.operacion_realizada(self.__club.add_evento(self.__vista.pedir_datos_evento()))
             case 7:
-                self.__vista.listar_cuotas(self.__club.get_control_cuotas())
+                anno = self.__vista.pedir_anno()
+                self.__vista.listar_control_cuotas(anno, self.__club.get_control_cuotas())
             case 8:
                 datos_cuota = self.__vista.pedir_datos_cuota()
-                self.__club.actualizar_cuotas(datos_cuota["anno"], datos_cuota["cuota"])
+                self.__club.actualizar_cuotas(datos_cuota["anno"], datos_cuota["descuentos"], datos_cuota["pagos"])
             case 9:
-                #TODO: Realizar pago cuota
-                pass
+                dni_socio = self.__vista.pedir_dni_socio()
+                self.__vista.operacion_realizada(self.__club.realizar_pago(dni_socio))
 
     def opciones_socio(self, opcion: int) -> None:
         match opcion:
@@ -65,5 +66,4 @@ class Controlador:
             case 7:
                 self.__vista.listar_familia(self.__club.get_familia_socio())
             case 8:
-                #TODO: Ver historico
-                pass
+                self.__vista.listar_historico(self.__club.get_historico())

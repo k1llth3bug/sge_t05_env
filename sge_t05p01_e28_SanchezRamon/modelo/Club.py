@@ -21,7 +21,22 @@ class Club:
         self.__lista_eventos = [] if lista_eventos is None else lista_eventos
         self.__logged_user = None
         self.__logged_socio = None
-        self.__control_cuotas = {2021:{"pareja":0.08,"hijos":0.12,"ambos":0.27},2022:{"pareja":0.1,"hijos":0.15,"ambos":0.3},2023:{"pareja":0.12, "hijos":0.18,"ambos":0.33}} if control_cuotas is None else control_cuotas
+        self.__control_cuotas = {2021: {
+                "descuentos":{
+                    "pareja":0.08,"hijos":0.12,"ambos":0.27},
+                    "pagos": []
+                },
+            2022:{
+                "descuentos":{
+                    "pareja":0.1,"hijos":0.15,"ambos":0.3},
+                    "pagos": []
+                },
+            2023:{
+                "descuentos":{
+                    "pareja":0.12, "hijos":0.18,"ambos":0.33},
+                    "pagos": []
+                }
+        } if control_cuotas is None else control_cuotas
         self.comprobar_archivos()
 
     def get_lista_socios(self) -> List[Socio]:
@@ -64,7 +79,14 @@ class Club:
 
     def __cargar_cuotas(self) -> None:
         with open(ARCHIVO_CUOTAS, "r", encoding="UTF-8") as f:
-            self.__control_cuotas = load(f)
+            control_cuotas = load(f)
+            temp = {}
+            for anno, datos in control_cuotas.items():
+                temp[int(anno)] = datos
+                for pago in temp[int(anno)]["pagos"]:
+                    pago["fecha_pago"] = date.fromisoformat(pago["fecha_pago"])
+            self.__control_cuotas = temp
+
 
     def guardar_datos(self) -> None:
         self.__guardar_socios_usuarios()
@@ -84,7 +106,12 @@ class Club:
 
     def __guardar_cuotas(self) -> None:
         with open(ARCHIVO_CUOTAS, "w", encoding="UTF-8") as f:
-            dump(self.__control_cuotas, f, indent=4)
+            control_cuotas = {}
+            for anno, datos in self.__control_cuotas.items():
+                control_cuotas[anno] = datos
+                for pago in control_cuotas[anno]["pagos"]:
+                    pago["fecha_pago"] = pago["fecha_pago"].isoformat()
+            dump(control_cuotas, f, indent=4)
 
     def get_proximos_eventos_socio(self, dni_socio) -> List[Evento]:
         return [ev for ev in self.__lista_eventos if es_posterior_o_igual(ev.get_fecha(), date.today()) and ev.check_inscrito(dni_socio)]
@@ -159,17 +186,17 @@ class Club:
     def __actualizar_descuento_socio(self, socio: Socio) -> None:
         familia_socio = socio.get_familia()
         if "hijos" in familia_socio and "pareja" in familia_socio:
-            socio.set_descuento(self.__control_cuotas[date.today().year]["ambos"])
+            socio.set_descuento(self.__control_cuotas[date.today().year]["descuentos"]["ambos"])
         elif "pareja" in familia_socio:
-            socio.set_descuento(self.__control_cuotas[date.today().year]["pareja"])
+            socio.set_descuento(self.__control_cuotas[date.today().year]["descuentos"]["pareja"])
         elif "hijos" in familia_socio:
-            socio.set_descuento(self.__control_cuotas[date.today().year]["hijos"])
+            socio.set_descuento(self.__control_cuotas[date.today().year]["descuentos"]["hijos"])
         else:
             dni_hijos = [s.get_familia()["hijos"] for s in self.__lista_socios if "hijos" in s.get_familia()]
             for dni_hijo in dni_hijos:
                 socios_hijos = [s for s in self.__lista_socios if s.get_usuario().get_dni() in dni_hijo]
                 for socio in socios_hijos:
-                    socio.set_descuento(self.__control_cuotas[date.today().year]["hijos"])
+                    socio.set_descuento(self.__control_cuotas[date.today().year]["descuentos"]["hijos"])
 
     def annadir_socio_familia(self, dni_socio: str, dni_familiar: str, tipo_familiar: str) -> bool:
         socio = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_socio]
@@ -203,8 +230,41 @@ class Club:
     def get_control_cuotas(self) -> dict:
         return self.__control_cuotas
 
-    def actualizar_cuotas(self, anno: int, datos_cuota: dict) -> None:
-        self.__control_cuotas[anno] = datos_cuota
+    def actualizar_cuotas(self, anno: int, descuentos: dict, pagos: list) -> None:
+        self.__control_cuotas[anno] = {}
+        self.__control_cuotas[anno]["descuentos"] = descuentos
+        pagos_socios = []
+        for pago in pagos:
+            socio = [s for s in self.__lista_socios if s.get_usuario().get_dni() == pago["dni"]]
+            if len(socio) != 0:
+                pagos_socios.append(pago)
+        self.__control_cuotas["anno"]["pagos"] = pagos_socios
+        for socio in self.__lista_socios:
+            self.__actualizar_descuento_socio(socio)
+
+    def realizar_pago(self, dni_socio: str) -> bool:
+        anno_actual = date.today().year
+        socio = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_socio]
+        if len(socio) != 0:
+            if anno_actual not in self.__control_cuotas:
+                self.__control_cuotas[anno_actual] = {"descuentos":{"familia":0.1,"hijos":0.15,"ambos":0.3}, "pagos":[]}
+            pagos_socio_anno = [p for p in self.__control_cuotas[anno_actual]["pagos"] if p.get("dni","") == dni_socio]
+            if len(pagos_socio_anno) == 0:
+                self.__control_cuotas[anno_actual]["pagos"].append({"dni":dni_socio, "pagado": True, "fecha_pago": date.today()})
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def get_historico(self) -> dict:
+        pagos = {}
+        for anno, datos_cuota in self.__control_cuotas.items():
+            pagos[anno] = []
+            for pago in datos_cuota.get("pagos", []):
+                if pago["dni"] == self.__logged_user.get_dni():
+                    pagos[anno].append(pago)
+        return pagos
 
     def __repr__(self) -> str:
         return f"Nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social}"

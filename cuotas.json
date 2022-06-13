@@ -1,17 +1,32 @@
 {
     "2021": {
-        "pareja": 0.08,
-        "hijos": 0.12,
-        "ambos": 0.27
+        "descuentos": {
+            "pareja": 0.08,
+            "hijos": 0.12,
+            "ambos": 0.27
+        },
+        "pagos": []
     },
     "2022": {
-        "pareja": 0.1,
-        "hijos": 0.15,
-        "ambos": 0.3
+        "descuentos": {
+            "pareja": 0.1,
+            "hijos": 0.15,
+            "ambos": 0.3
+        },
+        "pagos": [
+            {
+                "dni": "11111111A",
+                "pagado": true,
+                "fecha_pago": "2022-06-13"
+            }
+        ]
     },
     "2023": {
-        "pareja": 0.12,
-        "hijos": 0.18,
-        "ambos": 0.33
+        "descuentos": {
+            "pareja": 0.12,
+            "hijos": 0.18,
+            "ambos": 0.33
+        },
+        "pagos": []
     }
 }

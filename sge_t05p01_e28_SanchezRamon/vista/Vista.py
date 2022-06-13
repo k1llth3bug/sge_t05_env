@@ -58,15 +58,18 @@ class Vista:
                 print("No es un número, pruebe de nuevo")
         return res
 
+    def pedir_anno(self) -> int:
+        print("Dime un año:")
+        return self.pedir_entero(2000, 2100)
+
     def pedir_fecha(self) -> date:
         res = None
         es_valida = False
         while not es_valida:
-            print("Dime el año:")
-            anno = self.pedir_entero(1, 2100)
-            print("Dime el mes:")
+            anno = self.pedir_anno()
+            print("Dime un mes:")
             mes = self.pedir_entero(1, 12)
-            print("Dime el día:")
+            print("Dime un día:")
             dia = self.pedir_entero(1, 31)
             try:
                 res = date(anno, mes, dia)
@@ -110,7 +113,7 @@ class Vista:
         print("Dime su dirección:")
         datos_socio["direccion"] = input()
         print("Dime su teléfono:")
-        datos_socio["telefono"] = self.pedir_entero(600000000, 700000000)
+        datos_socio["telefono"] = self.pedir_entero(600000000, 700000000-1)
         print("Dime su email:")
         datos_socio["email"] = input()
         return datos_socio
@@ -169,22 +172,45 @@ class Vista:
         datos_evento["precio"] = precio
         return datos_evento
 
-    def listar_cuotas(self, cuotas: dict) -> None:
-        for anno, datos in cuotas.items():
+    def listar_control_cuotas(self, anno: int, control_cuotas: dict) -> None:
+        if anno not in control_cuotas:
+            print(f"No hay control de cuotas para el año {anno}")
+        else:
+            datos = control_cuotas[anno]
             print(f"Cuotas de {anno}")
-            print(f"Pareja: {datos['pareja']}, hijos: {datos['hijos']}, ambos: {datos['ambos']}")
+            print(f"Descuento por pareja: {100*datos['descuentos']['pareja']}%, hijos: {100*datos['descuentos']['hijos']}%, ambos: {100*datos['descuentos']['ambos']}%")
+            if len(datos["pagos"]) != 0:
+                for pago in datos["pagos"]:
+                    print(f"Socio {pago['dni']}: {'Pagado' if pago['pagado'] else 'No pagado'}")
+            else:
+                print(f"No hay pagos para el año {anno}")
 
     def pedir_datos_cuota(self) -> dict:
         datos = {}
         print("Dime el año:")
-        datos["anno"] = self.pedir_entero(1, 2100)
-        datos["cuota"] = {}
+        datos["anno"] = self.pedir_entero(2000, 2100)
+        datos["descuentos"] = {}
         print("Dime el descuento por pareja:")
-        datos["cuota"]["pareja"] = self.pedir_decimal(0, 1)
+        datos["descuentos"]["pareja"] = self.pedir_decimal(0, 1)
         print("Dime el descuento por hijos:")
-        datos["cuota"]["hijos"] = self.pedir_decimal(0, 1)
+        datos["descuentos"]["hijos"] = self.pedir_decimal(0, 1)
         print("Dime el descuento por ambos:")
-        datos["cuota"]["ambos"] = self.pedir_decimal(0, 1)
+        datos["descuentos"]["ambos"] = self.pedir_decimal(0, 1)
+        datos["pagos"] = []
+        print("Dime cuántos socios quieres actualizar:")
+        num_socios = self.pedir_entero(1, 5)
+        for _ in range(0, num_socios):
+            print("Dime un dni de socio:")
+            dni_socio = input()
+            while len(dni_socio.strip()) == 0:
+                print("El dni no puede estar vacío ni ser sñolo espacios, pruebe de nuevo")
+                dni_socio = input()
+            print("Dime si ha pagado este año:")
+            pagado = input()
+            while not self.validar_respuesta(pagado, ["s", "n"]):
+                print("No es una respuesta válida, sólo s o n")
+                pagado = input()
+            datos["pagos"].append({"dni": dni_socio, "pagado": pagado.casefold() == "y", "fecha_pago": date(datos["anno"], date.today().month, date.today().day)})
         return datos
 
     def listar_eventos_socio_inscrito(self, lista_eventos_socio_inscrito: list) -> None:
@@ -252,10 +278,6 @@ class Vista:
         datos_bici["precio"] = precio
         return datos_bici
 
-    def listar_familia(self, familia: dict) -> None:
-        for tipo, socios in familia.items():
-            print(f"{tipo}: {socios}")
-
     def pedir_datos_reparacion(self) -> dict:
         datos_reparacion = {}
         print("Dime la fecha de la reparación:")
@@ -280,6 +302,18 @@ class Vista:
             num +=1
         print("Dime el número de la bicicleta:")
         return self.pedir_entero(1, len(lista_bicis))
+
+    def listar_familia(self, familia: dict) -> None:
+        for tipo, socios in familia.items():
+            print(f"{tipo}: {socios}")
+
+    def listar_historico(self, historico: dict) -> None:
+        for anno, pagos in historico.items():
+            if len(pagos) == 0:
+                print(f"No hay pagos para el año {anno}")
+            else:
+                for pago in pagos:
+                    print(f"Fecha de pago: {pago['fecha_pago']}")
 
     def mostrar_opciones_admin(self) -> None:
         opcion = -1
