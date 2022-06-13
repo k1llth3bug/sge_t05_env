@@ -34,9 +34,10 @@ class Club:
         if exists(ARCHIVO_USUARIOS) and exists(ARCHIVO_SOCIOS) and exists(ARCHIVO_EVENTOS):
             self.__cargar_usuarios_socios()
             self.__cargar_eventos()
-            self.__cargar_cuotas()
         else:
             self.__lista_socios.append(Socio(Usuario("11111111A", "admin", es_admin=True), "admin"))
+        if exists(ARCHIVO_CUOTAS):
+            self.__cargar_cuotas()
 
     def __cargar_usuarios_socios(self) -> None: 
         with open(ARCHIVO_USUARIOS, "r", encoding="UTF-8") as f_users, open(ARCHIVO_SOCIOS, "r", encoding="UTF-8") as f_socios:
