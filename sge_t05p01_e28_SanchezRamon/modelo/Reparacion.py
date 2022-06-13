@@ -6,9 +6,8 @@ class Reparacion:
         self.__fecha, self.__coste, self.__descripcion, self.__categoria = fecha, coste, descripcion, categoria
 
     @classmethod
-    def from_dict(cls, dict_rep: dict):
-        for datos_rep in dict_rep.values():
-            return cls(date.fromisoformat(datos_rep["fecha"]), datos_rep["coste"], datos_rep["descripcion"], Categoria(datos_rep["categoria"]))
+    def from_dict(cls, datos_rep: dict):
+            return cls(date.fromisoformat(datos_rep["fecha"]), datos_rep["coste"], datos_rep["descripcion"], Categoria(int(datos_rep["categoria"])))
 
     def dict_reparcion(self):
         return {"fecha": self.__fecha.isoformat(), "coste": self.__coste, "descripcion": self.__descripcion, "categoria": self.__categoria.value}

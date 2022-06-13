@@ -22,7 +22,8 @@
                     "33333333C"
                 ],
                 "hijos": [
-                    "44444444D"
+                    "44444444D",
+                    "99999999Z"
                 ]
             }
         }
@@ -50,6 +51,52 @@
             "email": "",
             "lista_bicicletas": [],
             "familia": {}
+        }
+    },
+    {
+        "99999999Z": {
+            "nombre": "Prueba",
+            "direccion": "Prueba",
+            "telefono": 699999999,
+            "email": "prueba@gmail.com",
+            "lista_bicicletas": [
+                {
+                    "fecha_compra": "2022-01-01",
+                    "marca": "Orbea",
+                    "modelo": "Alma",
+                    "tipo": "Monta\u00f1a",
+                    "color": "Rojo",
+                    "tamano_cuadro": 20.0,
+                    "tamano_ruedas": 7.0,
+                    "precio": 1500.0,
+                    "reparaciones": [
+                        {
+                            "fecha": "2022-02-01",
+                            "coste": 400.0,
+                            "descripcion": "Ruedas",
+                            "categoria": 1
+                        },
+                        {
+                            "fecha": "2022-02-01",
+                            "coste": 500.0,
+                            "descripcion": "Ruedas",
+                            "categoria": 1
+                        },
+                        {
+                            "fecha": "2022-03-01",
+                            "coste": 30.0,
+                            "descripcion": "Asiento",
+                            "categoria": 3
+                        }
+                    ]
+                }
+            ],
+            "familia": {
+                "pareja": [
+                    "22222222B",
+                    "99999999Z"
+                ]
+            }
         }
     }
 ]

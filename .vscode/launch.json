@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "args": ["-u","11111111A","-p","admin","-A"],
+            "args": ["-u","99999999Z","-p","test"],
             "name": "Python: Archivo actual",
             "type": "python",
             "request": "launch",

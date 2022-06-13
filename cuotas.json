@@ -18,6 +18,11 @@
                 "dni": "11111111A",
                 "pagado": true,
                 "fecha_pago": "2022-06-13"
+            },
+            {
+                "dni": "99999999Z",
+                "pagado": true,
+                "fecha_pago": "2022-06-13"
             }
         ]
     },

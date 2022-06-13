@@ -10,10 +10,9 @@ class Evento:
         self.__lista_socios_inscritos = lista_socios_inscritos if lista_socios_inscritos is not None else []
 
     @classmethod
-    def from_dict(cls, dict_evento: dict):
-        for datos_evento in dict_evento.values():
-            return cls(date.fromisoformat(datos_evento["fecha"]), date.fromisoformat(datos_evento["fecha_inscripcion"]), datos_evento["localidad"], datos_evento["provincia"],
-            datos_evento["organizador"], datos_evento["km_totales"], datos_evento["precio"], None)
+    def from_dict(cls, datos_evento: dict):
+        return cls(date.fromisoformat(datos_evento["fecha"]), date.fromisoformat(datos_evento["fecha_inscripcion"]), datos_evento["localidad"], datos_evento["provincia"],
+        datos_evento["organizador"], datos_evento["km_totales"], datos_evento["precio"], None)
 
     def to_dict(self):
         return {"fecha":self.__fecha.isoformat(), "fecha_inscripcion":self.__fecha_inscripcion.isoformat(), "localidad":self.__localidad, "provincia":self.__provincia,

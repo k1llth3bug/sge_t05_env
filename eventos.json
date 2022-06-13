@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "fecha": "2022-07-01",
+        "fecha_inscripcion": "2022-06-01",
+        "localidad": "Cuenca",
+        "provincia": "Cuenca",
+        "organizador": "Juan",
+        "km_totales": 90.0,
+        "precio": 10.0,
+        "socios_inscritos": [
+            "99999999Z"
+        ]
+    }
+]

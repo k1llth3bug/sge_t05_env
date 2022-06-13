@@ -16,10 +16,9 @@ class Bicicleta:
         return self.__modelo
 
     @classmethod
-    def from_dict(cls, dict_bici: dict):
-        for datos_bici in dict_bici.values():
-            return cls(date.fromisoformat(datos_bici["fecha_compra"]), datos_bici["marca"], datos_bici["modelo"], datos_bici["tipo"], datos_bici["color"],
-            datos_bici["tamano_cuadro"], datos_bici["tamano_ruedas"], datos_bici["precio"], [Reparacion.from_dict(r) for r in datos_bici["reparaciones"]])
+    def from_dict(cls, datos_bici: dict):
+        return cls(date.fromisoformat(datos_bici["fecha_compra"]), datos_bici["marca"], datos_bici["modelo"], datos_bici["tipo"], datos_bici["color"],
+        datos_bici["tamano_cuadro"], datos_bici["tamano_ruedas"], datos_bici["precio"], [Reparacion.from_dict(r) for r in datos_bici["reparaciones"]])
 
     def dict_bicicleta(self):
         return {"fecha_compra": self.__fecha_compra.isoformat(), "marca": self.__marca, "modelo": self.__modelo, "tipo": self.__tipo, "color": self.__color,

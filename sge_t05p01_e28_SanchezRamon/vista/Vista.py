@@ -233,8 +233,8 @@ class Vista:
             print("No hay bicicletas")
 
     def listar_reparaciones(self, reparaciones: dict) -> None:
-        for bici, lista_reparaciones in reparaciones.items:
-            if len(lista_reparaciones) > 0:
+        for bici, lista_reparaciones in reparaciones.items():
+            if len(lista_reparaciones) == 0:
                 print(f"La bicicleta {bici} no tiene reparaciones")
             else:
                 print(f"Las reparaciones de la bicicleta {bici} son:")

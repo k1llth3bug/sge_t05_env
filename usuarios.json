@@ -2,7 +2,7 @@
     {
         "11111111A": {
             "contrasena": "admin",
-            "ultimo_acceso": "2022-06-13T10:33:48.069927",
+            "ultimo_acceso": "2022-06-13T10:49:00.924331",
             "es_admin": true
         }
     },
@@ -24,6 +24,13 @@
         "44444444D": {
             "contrasena": "testhijo",
             "ultimo_acceso": "2022-06-06T11:23:48.977872",
+            "es_admin": false
+        }
+    },
+    {
+        "99999999Z": {
+            "contrasena": "test",
+            "ultimo_acceso": "2022-06-13T11:14:15.162297",
             "es_admin": false
         }
     }

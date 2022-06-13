@@ -171,7 +171,7 @@ class Club:
         return familia
 
     def inscribir_socio_evento(self, num_evento: int) -> bool:
-        self.get_proximos_eventos()[num_evento].inscribir_socio(self.__logged_socio)
+        self.get_proximos_eventos()[num_evento-1].inscribir_socio(self.__logged_socio)
 
     def annadir_socio(self, datos_socio: dict) -> bool:
         coincidencias_dni = [s for s in self.__lista_socios if s.get_usuario().get_dni() == datos_socio["dni"]]
@@ -207,7 +207,9 @@ class Club:
                     familiar[0].annadir_miembro_familia(dni_socio, tipo_familiar)
                 self.__actualizar_descuento_socio(socio[0])
                 self.__actualizar_descuento_socio(familiar[0])
-            return True
+                return True
+            else:
+                return False
         else:
             return False
 
