@@ -34,11 +34,10 @@ class Controlador:
             case 6:
                 self.__vista.operacion_realizada(self.__club.add_evento(self.__vista.pedir_datos_evento()))
             case 7:
-                #TODO: Ver control cuotas anual
-                pass
+                self.__vista.listar_cuotas(self.__club.get_control_cuotas())
             case 8:
-                #TODO: Actualizar control cuotas
-                pass
+                datos_cuota = self.__vista.pedir_datos_cuota()
+                self.__club.actualizar_cuotas(datos_cuota["anno"], datos_cuota["cuota"])
             case 9:
                 #TODO: Realizar pago cuota
                 pass

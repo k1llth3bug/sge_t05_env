@@ -27,7 +27,7 @@ class Vista:
                 else:
                     print(f"No está entre {minimo} y {maximo}, pruebe de nuevo")
             except ValueError:
-                print("No es un número, pruebe de nuevo")
+                print("No es un número entero, pruebe de nuevo")
         return res
 
     def pedir_decimal_positivo(self) -> float:
@@ -40,6 +40,20 @@ class Vista:
                     print("No es un número válido, pruebe de nuevo")
                 else:
                     valido = True
+            except ValueError:
+                print("No es un número, pruebe de nuevo")
+        return res
+
+    def pedir_decimal(self, minimo: float, maximo: float) -> float:
+        valido = False
+        res = 0
+        while not valido:
+            try:
+                res = float(input())
+                if minimo <= res < maximo:
+                    valido = True
+                else:
+                    print(f"No está entre {minimo} y {maximo}, pruebe de nuevo")
             except ValueError:
                 print("No es un número, pruebe de nuevo")
         return res
@@ -154,6 +168,24 @@ class Vista:
         precio = self.pedir_decimal_positivo()
         datos_evento["precio"] = precio
         return datos_evento
+
+    def listar_cuotas(self, cuotas: dict) -> None:
+        for anno, datos in cuotas.items():
+            print(f"Cuotas de {anno}")
+            print(f"Pareja: {datos['pareja']}, hijos: {datos['hijos']}, ambos: {datos['ambos']}")
+
+    def pedir_datos_cuota(self) -> dict:
+        datos = {}
+        print("Dime el año:")
+        datos["anno"] = self.pedir_entero(1, 2100)
+        datos["cuota"] = {}
+        print("Dime el descuento por pareja:")
+        datos["cuota"]["pareja"] = self.pedir_decimal(0, 1)
+        print("Dime el descuento por hijos:")
+        datos["cuota"]["hijos"] = self.pedir_decimal(0, 1)
+        print("Dime el descuento por ambos:")
+        datos["cuota"]["ambos"] = self.pedir_decimal(0, 1)
+        return datos
 
     def listar_eventos_socio_inscrito(self, lista_eventos_socio_inscrito: list) -> None:
         if len(lista_eventos_socio_inscrito) > 0:

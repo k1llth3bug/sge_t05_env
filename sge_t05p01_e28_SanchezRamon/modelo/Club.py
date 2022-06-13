@@ -13,16 +13,14 @@ from modelo.Categoria import Categoria
 ARCHIVO_USUARIOS = "usuarios.json"
 ARCHIVO_SOCIOS = "socios.json"
 ARCHIVO_EVENTOS = "eventos.json"
-DESCUENTO_HIJOS_PAREJA = 0.3
-DESCUENTO_SOLO_HIJOS = 0.15
-DESCUENTO_SOLO_PAREJA = 0.1
 class Club:
-    def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = None, lista_eventos: List[Evento] = None) -> None:
+    def __init__(self, nombre: str, cif: str, sede_social: str, lista_socios : List[Socio] = None, lista_eventos: List[Evento] = None, control_cuotas: dict = None) -> None:
         self.__nombre, self.__cif, self.__sede_social = nombre, cif, sede_social 
         self.__lista_socios = [] if lista_socios is None else lista_socios
         self.__lista_eventos = [] if lista_eventos is None else lista_eventos
         self.__logged_user = None
         self.__logged_socio = None
+        self.__control_cuotas = {2021:{"pareja":0.08,"hijos":0.12,"ambos":0.27},2022:{"pareja":0.1,"hijos":0.15,"ambos":0.3},2023:{"pareja":0.12, "hijos":0.18,"ambos":0.33}} if control_cuotas is None else control_cuotas
         self.comprobar_archivos()
 
     def get_lista_socios(self) -> List[Socio]:
@@ -149,17 +147,17 @@ class Club:
     def __actualizar_descuento_socio(self, socio: Socio) -> None:
         familia_socio = socio.get_familia()
         if "hijos" in familia_socio and "pareja" in familia_socio:
-            socio.set_descuento(DESCUENTO_HIJOS_PAREJA)
+            socio.set_descuento(self.__control_cuotas[date.today().year]["ambos"])
         elif "pareja" in familia_socio:
-            socio.set_descuento(DESCUENTO_SOLO_PAREJA)
+            socio.set_descuento(self.__control_cuotas[date.today().year]["pareja"])
         elif "hijos" in familia_socio:
-            socio.set_descuento(DESCUENTO_SOLO_HIJOS)
+            socio.set_descuento(self.__control_cuotas[date.today().year]["hijos"])
         else:
             dni_hijos = [s.get_familia()["hijos"] for s in self.__lista_socios if "hijos" in s.get_familia()]
             for dni_hijo in dni_hijos:
                 socios_hijos = [s for s in self.__lista_socios if s.get_usuario().get_dni() in dni_hijo]
                 for socio in socios_hijos:
-                    socio.set_descuento(DESCUENTO_SOLO_HIJOS)
+                    socio.set_descuento(self.__control_cuotas[date.today().year]["hijos"])
 
     def annadir_socio_familia(self, dni_socio: str, dni_familiar: str, tipo_familiar: str) -> bool:
         socio = [s for s in self.__lista_socios if s.get_usuario().get_dni() == dni_socio]
@@ -189,6 +187,12 @@ class Club:
                 return False
         self.__lista_eventos.append(evento)
         return True
+
+    def get_control_cuotas(self) -> dict:
+        return self.__control_cuotas
+
+    def actualizar_cuotas(self, anno: int, datos_cuota: dict) -> None:
+        self.__control_cuotas[anno] = datos_cuota
 
     def __repr__(self) -> str:
         return f"Nombre: {self.__nombre}, cif: {self.__cif}, sede_social: {self.__sede_social}"
